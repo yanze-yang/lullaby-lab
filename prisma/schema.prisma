@@ -64,3 +64,27 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+// schema.prisma
+model Home {
+  id          String   @id @default(cuid())
+  image       String?
+  title       String
+  description String
+  price       Float
+  guests      Int
+  beds        Int
+  baths       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  admin       Admin?   @relation(fields: [adminId], references: [id])
+  adminId     String
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  homes     Home[]
+}

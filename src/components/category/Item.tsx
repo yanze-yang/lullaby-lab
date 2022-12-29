@@ -1,12 +1,12 @@
 import React from "react";
+import type { ICategory } from "../../types";
 import Link from "next/link";
-import type { IProduct } from "../../types";
 
 interface Props {
-  product: IProduct;
+  category: ICategory;
 }
 
-export default function Item({ product }: Props) {
+export default function Item({ category }: Props) {
   return (
     <tr className="hover:bg-gray-50border-gray-700bg-gray-800hover:bg-gray-600 border-b bg-white">
       <td className="w-4 p-4">
@@ -25,14 +25,11 @@ export default function Item({ product }: Props) {
         scope="row"
         className="text-gray-900text-white whitespace-nowrap py-4 px-6 font-medium"
       >
-        {product.name}
+        {category.name}
       </th>
-      <td className="py-4 px-6">Silver</td>
-      <td className="py-4 px-6">{product.category.name}</td>
-      <td className="py-4 px-6">${product.price}</td>
       <td className="py-4 px-6">
         <Link
-          href={`/shop/${product.id}`}
+          href={`/category/${category.id}`}
           className="hover:underlinetext-blue-500 font-medium text-blue-600"
         >
           Edit

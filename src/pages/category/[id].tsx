@@ -14,13 +14,13 @@ const List = (product: IProduct) => {
 };
 
 export async function getStaticPaths() {
-  const products = await prisma.product.findMany({
+  const categories = await prisma.category.findMany({
     select: { id: true },
   });
 
   return {
-    paths: products.map((product) => ({
-      params: { id: product.id },
+    paths: categories.map((category) => ({
+      params: { id: category.id },
     })),
     fallback: false,
   };
@@ -28,13 +28,13 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
   // Get the current product from the database
-  const product = await prisma.product.findUnique({
+  const category = await prisma.category.findUnique({
     where: { id: params.id },
   });
 
-  if (product) {
+  if (category) {
     return {
-      props: JSON.parse(JSON.stringify(product)),
+      props: JSON.parse(JSON.stringify(category)),
     };
   }
 

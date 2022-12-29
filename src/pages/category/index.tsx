@@ -1,25 +1,27 @@
 import React from "react";
-// import axios from "axios";
-import Item from "../../components/shop/Item";
+import Item from "../../components/category/Item";
 import { prisma } from "../../server/db/client";
-import type { IProduct } from "../../types";
+import type { ICategory } from "../../types";
 
 export async function getServerSideProps() {
-  const products = await prisma.product.findMany({
+  const categories = await prisma.category.findMany({
     include: {
-      category: true,
+      products: true,
     },
   });
-  // const { data } = await axios.get("http://localhost:3000/api/products");
   return {
     props: {
-      products: JSON.parse(JSON.stringify(products)),
+      categories: JSON.parse(JSON.stringify(categories)),
     },
   };
 }
 
-export default function ShopIndex({ products }: { products: IProduct[] }) {
-  if (products.length === 0) return <div>loading...</div>;
+export default function CategoryIndex({
+  categories,
+}: {
+  categories: ICategory[];
+}) {
+  if (categories.length === 0) return <div>loading...</div>;
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <div className="flex items-center justify-between pb-4">
@@ -220,8 +222,8 @@ export default function ShopIndex({ products }: { products: IProduct[] }) {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <Item key={product.id} product={product} />
+          {categories.map((category) => (
+            <Item key={category.id} category={category} />
           ))}
         </tbody>
       </table>

@@ -1,22 +1,28 @@
 import React from "react";
-import axios from "axios";
+// import axios from "axios";
 import type { Product, Category } from "@prisma/client";
-import Item from "../components/shop/Item";
+import Item from "../../components/shop/Item";
+import { prisma } from "../../server/db/client";
 
 interface IProduct extends Product {
   category: Category;
 }
 
 export async function getServerSideProps() {
-  const { data } = await axios.get("http://localhost:3000/api/products");
+  const products = await prisma.product.findMany({
+    include: {
+      category: true,
+    },
+  });
+  // const { data } = await axios.get("http://localhost:3000/api/products");
   return {
     props: {
-      products: data,
+      products: JSON.parse(JSON.stringify(products)),
     },
   };
 }
 
-export default function Shop({ products }: { products: IProduct[] }) {
+export default function ShopIndex({ products }: { products: IProduct[] }) {
   if (products.length === 0) return <div>loading...</div>;
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

@@ -1,5 +1,6 @@
 import React from "react";
 import type { Product, Category } from "@prisma/client";
+import Link from "next/link";
 
 interface IProduct extends Product {
   category: Category;
@@ -34,12 +35,12 @@ export default function Item({ product }: Props) {
       <td className="py-4 px-6">{product.category.name}</td>
       <td className="py-4 px-6">${product.price}</td>
       <td className="py-4 px-6">
-        <a
-          href="#"
+        <Link
+          href={`/shop/${product.id}`}
           className="hover:underlinetext-blue-500 font-medium text-blue-600"
         >
           Edit
-        </a>
+        </Link>
       </td>
     </tr>
   );

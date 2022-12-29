@@ -1,9 +1,9 @@
 import type { Product, Category } from "@prisma/client";
 
-export interface ICategory extends Category {
+export type ICategory = Category & {
   products: Product[];
-}
+};
 
-export interface IProduct extends Product {
+export type IProduct = Product & {
   category: Category;
-}
+};

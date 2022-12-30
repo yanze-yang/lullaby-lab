@@ -1,19 +1,15 @@
 import React from "react";
-// import axios from "axios";
+import axios from "axios";
 import Item from "../../components/shop/Item";
-import { prisma } from "../../server/db/client";
 import type { IProduct } from "../../types";
 
+import { env } from "../../env/server.mjs";
+
 export async function getServerSideProps() {
-  const products = await prisma.product.findMany({
-    include: {
-      category: true,
-    },
-  });
-  // const { data } = await axios.get("http://localhost:3000/api/products");
+  const { data } = await axios.get(`${env.API_END_POINT}/api/products`);
   return {
     props: {
-      products: JSON.parse(JSON.stringify(products)),
+      products: data,
     },
   };
 }

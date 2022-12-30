@@ -21,6 +21,11 @@ export const serverSchema = z.object({
   ),
   // DISCORD_CLIENT_ID: z.string(),
   // DISCORD_CLIENT_SECRET: z.string(),
+
+  API_END_POINT: z.preprocess(
+    (str) => process.env.VERCEL_URL ?? str,
+    process.env.VERCEL ? z.string() : z.string().url()
+  ),
 });
 
 /**

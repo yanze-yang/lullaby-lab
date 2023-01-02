@@ -8,29 +8,23 @@ interface Props {
 
 export default function Item({ category }: Props) {
   return (
-    <tr className="hover:bg-gray-50border-gray-700bg-gray-800hover:bg-gray-600 border-b bg-white">
-      <td className="w-4 p-4">
-        <div className="flex items-center">
-          <input
-            id="checkbox-table-3"
-            type="checkbox"
-            className="focus:ring-blue-500border-gray-600bg-gray-700ring-offset-gray-800focus:ring-blue-600 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2"
-          />
-          <label htmlFor="checkbox-table-3" className="sr-only">
-            checkbox
-          </label>
-        </div>
-      </td>
+    <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
       <th
         scope="row"
-        className="text-gray-900text-white whitespace-nowrap py-4 px-6 font-medium"
+        className="whitespace-nowrap py-4 px-6 font-medium text-gray-900 dark:text-white"
       >
         {category.name}
       </th>
-      <td className="py-4 px-6">
+      <th
+        scope="row"
+        className="whitespace-nowrap py-4 px-6 font-medium text-gray-900 dark:text-white"
+      >
+        {category.products.length}
+      </th>
+      <td className="py-4 px-6 text-right">
         <Link
           href={`/category/${category.id}`}
-          className="hover:underlinetext-blue-500 font-medium text-blue-600"
+          className="font-medium text-blue-600 hover:underline dark:text-blue-500"
         >
           Edit
         </Link>

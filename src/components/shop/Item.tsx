@@ -19,6 +19,7 @@ export default function Item({ product }: Props) {
       <td className="py-4 px-6">{product.description}</td>
       <td className="py-4 px-6">{product.category.name}</td>
       <td className="py-4 px-6">{product.price}</td>
+      <td className="py-4 px-6">{product.image}</td>
       <td className="py-4 px-6 text-right">
         <Link
           href={`/shop/${product.id}`}

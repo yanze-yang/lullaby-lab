@@ -4,15 +4,19 @@ import { prisma } from "../../server/db/client";
 import type { IProduct, ProductFormData } from "../../types";
 import { Field } from "../../components/form/Field";
 import Navbar from "../../components/layout/Navbar";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const List = (product: IProduct) => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ProductFormData>();
   const onSubmit = (data: ProductFormData) => {
-    console.log(data);
+    axios.patch(`/api/products/${product.id}`, data);
+    router.push("/shop");
   };
 
   if (!product) return null;

@@ -3,38 +3,51 @@ const prisma = new PrismaClient();
 
 const products = [
   {
-    name: "Macaron 1",
-    code: "MC1",
-    price: 10.99,
-    description: "Delicious macaron 1",
+    name: "Lemon",
+    code: "LE",
+    price: 4.5,
+    description:
+      "A sweet and tangy macaron filled with a refreshing lemon cream",
     image: "https://via.placeholder.com/150",
   },
   {
-    name: "Macaron 2",
-    code: "MC2",
-    price: 20.99,
-    description: "Delicious macaron 2",
+    name: "Chocolate",
+    code: "CH",
+    price: 4.5,
+    description:
+      "A rich and indulgent macaron filled with a smooth chocolate ganache",
     image: "https://via.placeholder.com/150",
   },
   {
-    name: "Macaron 3",
-    code: "MC3",
-    price: 30.99,
-    description: "Delicious macaron 3",
+    name: "Raspberry",
+    code: "RA",
+    price: 4.5,
+    description:
+      "A fruity and flavorful macaron filled with a tart raspberry jam",
     image: "https://via.placeholder.com/150",
   },
   {
-    name: "Macaron 4",
-    code: "MC4",
-    price: 40.99,
-    description: "Delicious macaron 4",
+    name: "Pistachio",
+    code: "PI",
+    price: 4.5,
+    description:
+      "A nutty and fragrant macaron filled with a creamy pistachio buttercream",
     image: "https://via.placeholder.com/150",
   },
   {
-    name: "Macaron 5",
-    code: "MC5",
-    price: 50.99,
-    description: "Delicious macaron 5",
+    name: "Salted Caramel",
+    code: "SC",
+    price: 4.5,
+    description:
+      "A sweet and salty macaron filled with a gooey salted caramel sauce",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    name: "Maple",
+    code: "MA",
+    price: 4.5,
+    description:
+      "A warm and cozy macaron filled with a sweet maple syrup buttercream",
     image: "https://via.placeholder.com/150",
   },
 ];

@@ -10,6 +10,7 @@ export type IProduct = Product & {
 
 export type ProductFormData = {
   id: string;
+  code: string;
   name: string;
   price: number;
   description: string;

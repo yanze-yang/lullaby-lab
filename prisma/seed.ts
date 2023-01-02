@@ -4,30 +4,35 @@ const prisma = new PrismaClient();
 const products = [
   {
     name: "Macaron 1",
+    code: "MC1",
     price: 10.99,
     description: "Delicious macaron 1",
     image: "https://via.placeholder.com/150",
   },
   {
     name: "Macaron 2",
+    code: "MC2",
     price: 20.99,
     description: "Delicious macaron 2",
     image: "https://via.placeholder.com/150",
   },
   {
     name: "Macaron 3",
+    code: "MC3",
     price: 30.99,
     description: "Delicious macaron 3",
     image: "https://via.placeholder.com/150",
   },
   {
     name: "Macaron 4",
+    code: "MC4",
     price: 40.99,
     description: "Delicious macaron 4",
     image: "https://via.placeholder.com/150",
   },
   {
     name: "Macaron 5",
+    code: "MC5",
     price: 50.99,
     description: "Delicious macaron 5",
     image: "https://via.placeholder.com/150",

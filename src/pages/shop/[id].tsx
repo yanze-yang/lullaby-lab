@@ -34,6 +34,15 @@ const List = (product: IProduct) => {
             </div>
             <div>
               <Field
+                label="code"
+                register={register}
+                required={true}
+                defaultValue={product.code}
+                readOnly
+              />
+            </div>
+            <div>
+              <Field
                 label="name"
                 register={register}
                 required={true}

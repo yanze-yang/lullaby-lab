@@ -16,7 +16,9 @@ export async function getServerSideProps() {
 }
 
 export default function ShopIndex({ products }: { products: IProduct[] }) {
+  console.log("products", products);
   if (products.length === 0) return <div>loading...</div>;
+
   return (
     <div className="h-[100vh] dark:bg-gray-900">
       <Navbar />
@@ -24,6 +26,9 @@ export default function ShopIndex({ products }: { products: IProduct[] }) {
         <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
+              <th scope="col" className="py-3 px-6">
+                Code
+              </th>
               <th scope="col" className="py-3 px-6">
                 Product name
               </th>

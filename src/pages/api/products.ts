@@ -8,6 +8,7 @@ const products = async (req: NextApiRequest, res: NextApiResponse) => {
       category: true,
     },
   });
+  console.log("products", products);
   res.status(200).json(products);
 };
 

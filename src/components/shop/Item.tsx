@@ -13,8 +13,9 @@ export default function Item({ product }: Props) {
         scope="row"
         className="whitespace-nowrap py-4 px-6 font-medium text-gray-900 dark:text-white"
       >
-        {product.name}
+        {product.code}
       </th>
+      <td className="py-4 px-6">{product.name}</td>
       <td className="py-4 px-6">{product.description}</td>
       <td className="py-4 px-6">{product.category.name}</td>
       <td className="py-4 px-6">{product.price}</td>

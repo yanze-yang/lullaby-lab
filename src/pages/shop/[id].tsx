@@ -15,14 +15,20 @@ const List = (product: IProduct) => {
     formState: { errors },
   } = useForm<ProductFormData>();
 
+  const redirect = () => {
+    setTimeout(() => {
+      router.push("/shop");
+    }, 1000);
+  };
+
   const onSubmit = (data: ProductFormData) => {
     axios.patch(`/api/products/${product.id}`, data);
-    router.push("/shop");
+    redirect();
   };
 
   const deleteProduct = () => {
     axios.delete(`/api/products/${product.id}`);
-    router.push("/shop");
+    redirect();
   };
 
   if (!product) return null;
@@ -102,13 +108,13 @@ const List = (product: IProduct) => {
           >
             Submit
           </button>
+          <button
+            onClick={deleteProduct}
+            className="ml-4 w-full rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 sm:w-auto"
+          >
+            Delete
+          </button>
         </form>
-        <button
-          onClick={deleteProduct}
-          className="w-full rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 sm:w-auto"
-        >
-          Delete
-        </button>
 
         {/* <div className="mx-auto max-w-4xl">
         <form onSubmit={handleSubmit(onSubmit)}>

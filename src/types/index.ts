@@ -7,3 +7,11 @@ export type ICategory = Category & {
 export type IProduct = Product & {
   category: Category;
 };
+
+export type ProductFormData = {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+};

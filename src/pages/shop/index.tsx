@@ -7,6 +7,11 @@ import Navbar from "../../components/layout/Navbar";
 
 export async function getServerSideProps() {
   const { data } = await axios.get(`${env.API_END_POINT}/api/products`);
+  // sort by time created
+  data.sort((a: IProduct, b: IProduct) => {
+    return a.createdAt > b.createdAt ? -1 : 1;
+  });
+
   return {
     props: {
       products: data,

@@ -29,6 +29,7 @@ const List = (product: IProduct) => {
                 register={register}
                 required={true}
                 defaultValue={product.id}
+                readOnly
               />
             </div>
             <div>

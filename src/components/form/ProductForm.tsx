@@ -13,7 +13,7 @@ type Props = {
   operation: "create" | "update";
 };
 
-export default function CreateProductForm({ product, operation }: Props) {
+export default function ProductForm({ product, operation }: Props) {
   const router = useRouter();
   const {
     register,

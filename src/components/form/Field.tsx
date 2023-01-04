@@ -7,7 +7,14 @@ import type {
 import type { ProductFormData } from "../../types";
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
-  label: "name" | "id" | "code" | "image" | "price" | "description";
+  label:
+    | "name"
+    | "id"
+    | "code"
+    | "image"
+    | "price"
+    | "description"
+    | "categoryId";
   register: UseFormRegister<ProductFormData>;
   required: boolean;
   // errors: any;

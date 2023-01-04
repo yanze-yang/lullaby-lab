@@ -15,4 +15,5 @@ export type ProductFormData = {
   price: number;
   description: string;
   image: string;
+  categoryId: string;
 };

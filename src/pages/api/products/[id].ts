@@ -7,6 +7,22 @@ const product = async (req: NextApiRequest, res: NextApiResponse) => {
   if (typeof id !== "string")
     return res.status(400).json({ message: "Invalid id" });
 
+  // get product by id
+  if (req.method === "GET") {
+    try {
+      const product = await prisma.product.findUnique({
+        where: { id },
+        include: {
+          category: true,
+        },
+      });
+
+      res.status(200).json(product);
+    } catch (e) {
+      res.status(500).json({ message: "Something went wrong" });
+    }
+  }
+
   // Update product
   if (req.method === "PATCH") {
     try {
@@ -33,7 +49,7 @@ const product = async (req: NextApiRequest, res: NextApiResponse) => {
 
   // HTTP method not supported!
   else {
-    res.setHeader("Allow", ["PATCH"]);
+    res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
     res
       .status(405)
       .json({ message: `HTTP method ${req.method} is not supported.` });

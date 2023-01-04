@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import ProductItem from "../../components/shop/Item";
+import ProductItem from "../../components/shop/ProductItem";
 import type { IProduct } from "../../types";
 import { env } from "../../env/server.mjs";
 import Navbar from "../../components/layout/Navbar";

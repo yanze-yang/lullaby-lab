@@ -2,24 +2,25 @@ import React from "react";
 import { prisma } from "../../server/db/client";
 import type { IProduct, ICategory } from "../../types";
 import ProductForm from "../../components/form/ProductForm";
-import { env } from "../../env/server.mjs";
-import axios from "axios";
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
-  // Get the current product from the database
-  const { data } = await axios.get(
-    `${env.API_END_POINT}/api/products/${params.id}`
-  );
+  // Get the current product from the database use prisma
+  const product = await prisma.product.findUnique({
+    where: { id: params.id },
+    include: {
+      category: true,
+    },
+  });
 
   const categories = await prisma.category.findMany({
     select: { id: true, name: true },
   });
 
-  if (data) {
+  if (product) {
     return {
       props: {
-        product: data,
-        categories,
+        product: JSON.parse(JSON.stringify(product)),
+        categories: JSON.parse(JSON.stringify(categories)),
       },
     };
   }

@@ -1,20 +1,26 @@
 import React from "react";
-import axios from "axios";
 import ProductItem from "../../components/shop/ProductItem";
 import type { IProduct } from "../../types";
-import { env } from "../../env/server.mjs";
 import Navbar from "../../components/layout/Navbar";
+import { prisma } from "../../server/db/client";
 
 export async function getServerSideProps() {
-  const { data } = await axios.get(`${env.API_END_POINT}/api/products`);
-  // sort by time created
-  data.sort((a: IProduct, b: IProduct) => {
-    return a.createdAt > b.createdAt ? -1 : 1;
+  const products = await prisma.product.findMany({
+    include: {
+      category: true,
+    },
+  });
+
+  // sort by created_at
+  products.sort((a, b) => {
+    if (a.createdAt < b.createdAt) return 1;
+    if (a.createdAt > b.createdAt) return -1;
+    return 0;
   });
 
   return {
     props: {
-      products: data,
+      products: JSON.parse(JSON.stringify(products)),
     },
   };
 }

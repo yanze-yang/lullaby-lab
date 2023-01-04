@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 
-const Navbar = () => {
+const Navbar = ({ page }: { page?: "shop" | "category" }) => {
   return (
     <div>
       <nav className="top-0 left-0 z-20 w-full border-b border-gray-200 bg-white px-2 py-2.5 dark:border-gray-600 dark:bg-gray-900 sm:px-4">
@@ -18,12 +18,16 @@ const Navbar = () => {
             </span>
           </a>
           <div className="flex md:order-2">
-            <button
-              type="button"
-              className="mr-3 rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 md:mr-0"
-            >
-              Get started
-            </button>
+            {page && (
+              <Link
+                href={`/${page}/create`}
+                type="button"
+                className="mr-3 rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 md:mr-0"
+              >
+                Create
+              </Link>
+            )}
+
             <button
               data-collapse-toggle="navbar-sticky"
               type="button"

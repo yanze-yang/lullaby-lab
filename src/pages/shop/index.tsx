@@ -24,7 +24,7 @@ export default function ShopIndex({ products }: { products: IProduct[] }) {
 
   return (
     <div className="h-[100vh] dark:bg-gray-900">
-      <Navbar />
+      <Navbar page="shop" />
       <div className="relative m-6 overflow-x-auto shadow-md sm:rounded-3xl">
         <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">

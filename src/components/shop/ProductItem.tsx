@@ -37,14 +37,6 @@ export default function ProductItem({ product }: Props) {
       <td className="py-4 px-6">{product.image}</td>
       <td className="py-4 px-6 text-right">
         <Link
-          href={`/shop/create`}
-          className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-        >
-          CREATE
-        </Link>
-      </td>
-      <td className="py-4 px-6 text-right">
-        <Link
           href={`/shop/${product.id}`}
           className="font-medium text-blue-600 hover:underline dark:text-blue-500"
         >

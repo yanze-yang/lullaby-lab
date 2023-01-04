@@ -42,7 +42,7 @@ export async function getStaticPaths() {
     paths: products.map((product) => ({
       params: { id: product.id },
     })),
-    fallback: false,
+    fallback: true,
   };
 }
 

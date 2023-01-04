@@ -22,7 +22,7 @@ export async function getStaticPaths() {
     paths: categories.map((category) => ({
       params: { id: category.id },
     })),
-    fallback: false,
+    fallback: true,
   };
 }
 

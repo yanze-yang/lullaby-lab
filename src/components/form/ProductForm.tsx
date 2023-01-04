@@ -7,6 +7,7 @@ import type { ProductFormData, IProduct, ICategory } from "../../types";
 import { useForm } from "react-hook-form";
 
 import type { Prisma } from "@prisma/client";
+import toast, { Toaster } from "react-hot-toast";
 
 type Props = {
   product?: IProduct;
@@ -33,18 +34,34 @@ export default function ProductForm({ product, categories, operation }: Props) {
       // Convert price to number
       data.price = Number(data.price);
 
-      axios.patch(`/api/products/${product.id}`, data);
-      redirect();
+      const update = axios
+        .patch(`/api/products/${product.id}`, data)
+        .then(() => {
+          redirect();
+        });
+
+      toast.promise(update, {
+        loading: "Loading",
+        success: "Product updated",
+        error: "Error updating product",
+      });
+      // if has response, redirect
     } else {
       // Convert price to number
       data.price = Number(data.price);
-
       const product: Prisma.ProductUncheckedCreateInput = {
         ...data,
       };
 
-      axios.post(`/api/products`, product);
-      redirect();
+      const create = axios.post(`/api/products`, product).then(() => {
+        redirect();
+      });
+
+      toast.promise(create, {
+        loading: "Loading",
+        success: "Product created",
+        error: "Error creating product",
+      });
     }
   };
 

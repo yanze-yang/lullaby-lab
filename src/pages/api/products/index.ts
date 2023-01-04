@@ -9,9 +9,9 @@ const products = async (req: NextApiRequest, res: NextApiResponse) => {
       const product = await prisma.product.create({
         data: req.body,
       });
-      res.status(200).json(product);
+      return res.status(200).json(product);
     } catch (e) {
-      res.status(500).json({ message: "Something went wrong" });
+      return res.status(500).json({ message: "Something went wrong" });
     }
   }
 
@@ -24,9 +24,9 @@ const products = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       });
 
-      res.status(200).json(products);
+      return res.status(200).json(products);
     } catch (e) {
-      res.status(500).json({ message: "Something went wrong" });
+      return res.status(500).json({ message: "Something went wrong" });
     }
   }
 

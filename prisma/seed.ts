@@ -54,7 +54,7 @@ const products = [
 
 async function main() {
   await prisma.category.upsert({
-    where: { id: "99c7020e-1e97-41fd-8dc4-570e4d82fbf9" },
+    where: { id: "151f1b59-68e6-4c97-81a8-fea553b1c27b" },
     update: {
       name: "Macaron",
       products: {

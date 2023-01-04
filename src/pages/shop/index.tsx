@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import Item from "../../components/shop/Item";
+import ProductItem from "../../components/shop/Item";
 import type { IProduct } from "../../types";
 import { env } from "../../env/server.mjs";
 import Navbar from "../../components/layout/Navbar";
@@ -102,11 +102,14 @@ export default function ShopIndex({ products }: { products: IProduct[] }) {
               <th scope="col" className="py-3 px-6">
                 <span className="sr-only">Edit</span>
               </th>
+              <th scope="col" className="py-3 px-6">
+                <span className="sr-only">Delete</span>
+              </th>
             </tr>
           </thead>
           <tbody>
             {products.map((product) => (
-              <Item key={product.id} product={product} />
+              <ProductItem key={product.id} product={product} />
             ))}
           </tbody>
         </table>

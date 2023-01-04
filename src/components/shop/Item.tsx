@@ -1,12 +1,27 @@
 import React from "react";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/router";
 import type { IProduct } from "../../types";
 
 interface Props {
   product: IProduct;
 }
 
-export default function Item({ product }: Props) {
+export default function ProductItem({ product }: Props) {
+  const router = useRouter();
+
+  const reload = () => {
+    setTimeout(() => {
+      router.reload();
+    }, 1000);
+  };
+
+  const deleteProduct = (id: string) => {
+    axios.delete(`/api/products/${id}`);
+    reload();
+  };
+
   return (
     <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
       <th
@@ -27,6 +42,14 @@ export default function Item({ product }: Props) {
         >
           Edit
         </Link>
+      </td>
+      <td className="py-4 px-6 text-right">
+        <a
+          className="cursor-pointer font-medium text-gray-300 hover:underline dark:text-gray-600"
+          onClick={() => deleteProduct(product.id)}
+        >
+          Delete
+        </a>
       </td>
     </tr>
   );

@@ -3,17 +3,18 @@ import Navbar from "../layout/Navbar";
 import { Field } from "./Field";
 import axios from "axios";
 import { useRouter } from "next/router";
-import type { ProductFormData, IProduct } from "../../types";
+import type { ProductFormData, IProduct, ICategory } from "../../types";
 import { useForm } from "react-hook-form";
 
 import type { Prisma } from "@prisma/client";
 
 type Props = {
   product?: IProduct;
+  categories: ICategory[];
   operation: "create" | "update";
 };
 
-export default function ProductForm({ product, operation }: Props) {
+export default function ProductForm({ product, categories, operation }: Props) {
   const router = useRouter();
   const {
     register,
@@ -40,7 +41,6 @@ export default function ProductForm({ product, operation }: Props) {
 
       const product: Prisma.ProductUncheckedCreateInput = {
         ...data,
-        categoryId: "151f1b59-68e6-4c97-81a8-fea553b1c27b",
       };
 
       axios.post(`/api/products`, product);
@@ -72,7 +72,7 @@ export default function ProductForm({ product, operation }: Props) {
                 label="code"
                 register={register}
                 required={true}
-                defaultValue={product && product.code}
+                defaultValue={product?.code}
                 placeholder="Create a unique code for your product"
               />
               {errors.code && (
@@ -86,7 +86,7 @@ export default function ProductForm({ product, operation }: Props) {
                 label="name"
                 register={register}
                 required={true}
-                defaultValue={product && product.name}
+                defaultValue={product?.name}
               />
               {errors.name && (
                 <span className="text-sm text-red-500">
@@ -100,7 +100,7 @@ export default function ProductForm({ product, operation }: Props) {
                 register={register}
                 type="number"
                 required={true}
-                defaultValue={product && product.price}
+                defaultValue={product?.price}
               />
               {errors.price && (
                 <span
@@ -117,7 +117,7 @@ export default function ProductForm({ product, operation }: Props) {
                 label="description"
                 register={register}
                 required={true}
-                defaultValue={product && product.description}
+                defaultValue={product?.description}
               />
               {errors.description && (
                 <span
@@ -134,7 +134,7 @@ export default function ProductForm({ product, operation }: Props) {
                 label="image"
                 register={register}
                 required={true}
-                defaultValue={product && product.image}
+                defaultValue={product?.image}
               />
               {errors.image && (
                 <span
@@ -147,12 +147,26 @@ export default function ProductForm({ product, operation }: Props) {
               )}
             </div>
             <div>
-              <Field
-                label="categoryId"
-                register={register}
-                required={true}
-                defaultValue={product && product.categoryId}
-              />
+              <label
+                htmlFor="categoryId"
+                className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Category
+              </label>
+              <select
+                {...register("categoryId")}
+                className={`block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 `}
+                defaultValue={product?.categoryId}
+              >
+                {/* <option value={product?.categoryId} disabled>
+                  {product?.category.name}
+                </option> */}
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           {operation === "create" ? (

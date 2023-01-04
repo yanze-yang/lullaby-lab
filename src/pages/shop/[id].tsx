@@ -1,6 +1,6 @@
 import React from "react";
 import { prisma } from "../../server/db/client";
-import type { IProduct } from "../../types";
+import type { IProduct, ICategory } from "../../types";
 import ProductForm from "../../components/form/ProductForm";
 import { env } from "../../env/server.mjs";
 import axios from "axios";
@@ -11,9 +11,16 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
     `${env.API_END_POINT}/api/products/${params.id}`
   );
 
+  const categories = await prisma.category.findMany({
+    select: { id: true, name: true },
+  });
+
   if (data) {
     return {
-      props: data,
+      props: {
+        product: data,
+        categories,
+      },
     };
   }
 
@@ -38,9 +45,17 @@ export async function getStaticPaths() {
   };
 }
 
-const List = (product: IProduct) => {
+const List = ({
+  product,
+  categories,
+}: {
+  product: IProduct;
+  categories: ICategory[];
+}) => {
   if (!product) return null;
-  return <ProductForm product={product} operation="update" />;
+  return (
+    <ProductForm product={product} categories={categories} operation="update" />
+  );
 };
 
 export default List;

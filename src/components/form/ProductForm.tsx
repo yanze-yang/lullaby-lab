@@ -7,7 +7,7 @@ import type { ProductFormData, IProduct, ICategory } from "../../types";
 import { useForm } from "react-hook-form";
 
 import type { Prisma } from "@prisma/client";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 type Props = {
   product?: IProduct;

@@ -3,6 +3,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 import type { IProduct } from "../../types";
+import toast from "react-hot-toast";
 
 interface Props {
   product: IProduct;
@@ -18,8 +19,15 @@ export default function ProductItem({ product }: Props) {
   };
 
   const deleteProduct = (id: string) => {
-    axios.delete(`/api/products/${id}`);
-    reload();
+    const remove = axios.delete(`/api/products/${id}`).then(() => {
+      reload();
+    });
+
+    toast.promise(remove, {
+      loading: "Loading",
+      success: "Product deleted",
+      error: "Error deleting product",
+    });
   };
 
   return (

@@ -8,10 +8,17 @@ export async function getStaticProps() {
     select: { id: true, name: true },
   });
 
+  // get all the codes from the products and put them in an array
+  const productsWithCode = await prisma.product.findMany({
+    select: { code: true },
+  });
+  const codes = productsWithCode.map((product) => product.code);
+
   if (categories) {
     return {
       props: {
         categories: JSON.parse(JSON.stringify(categories)),
+        codes,
       },
     };
   }
@@ -24,6 +31,18 @@ export async function getStaticProps() {
   };
 }
 
-export default function Create({ categories }: { categories: ICategory[] }) {
-  return <CreateProductForm operation="create" categories={categories} />;
+export default function Create({
+  categories,
+  codes,
+}: {
+  categories: ICategory[];
+  codes: string[];
+}) {
+  return (
+    <CreateProductForm
+      operation="create"
+      categories={categories}
+      codes={codes}
+    />
+  );
 }

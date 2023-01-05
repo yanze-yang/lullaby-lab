@@ -12,16 +12,24 @@ import toast from "react-hot-toast";
 type Props = {
   product?: IProduct;
   categories: ICategory[];
+  codes: string[];
   operation: "create" | "update";
 };
 
-export default function ProductForm({ product, categories, operation }: Props) {
+export default function ProductForm({
+  product,
+  categories,
+  codes,
+  operation,
+}: Props) {
   const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ProductFormData>();
+
+  const [isUnique, setIsUnique] = React.useState(true);
 
   const redirect = () => {
     setTimeout(() => {
@@ -65,6 +73,24 @@ export default function ProductForm({ product, categories, operation }: Props) {
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!codes) return;
+    // if code is already in the database, show error
+
+    setIsUnique(true);
+    if (operation === "create" && codes.includes(e.target.value)) {
+      setIsUnique(false);
+    }
+
+    if (
+      operation === "update" &&
+      codes.includes(e.target.value) &&
+      product?.code !== e.target.value
+    ) {
+      setIsUnique(false);
+    }
+  };
+
   if (!product && operation === "update") return null;
 
   return (
@@ -91,10 +117,16 @@ export default function ProductForm({ product, categories, operation }: Props) {
                 required={true}
                 defaultValue={product?.code}
                 placeholder="Create a unique code for your product"
+                handleChange={handleChange}
               />
               {errors.code && (
                 <span className="text-sm text-red-500">
                   This field is required
+                </span>
+              )}
+              {!isUnique && (
+                <span className="text-sm text-red-500">
+                  This code is already in use
                 </span>
               )}
             </div>
@@ -190,6 +222,7 @@ export default function ProductForm({ product, categories, operation }: Props) {
             <button
               type="submit"
               className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
+              disabled={!isUnique}
             >
               Create
             </button>
@@ -197,6 +230,7 @@ export default function ProductForm({ product, categories, operation }: Props) {
             <button
               type="submit"
               className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
+              disabled={!isUnique}
             >
               Update
             </button>

@@ -9,7 +9,7 @@ interface Props {
   product: IProduct;
 }
 
-export default function ProductItem({ product }: Props) {
+export default function ProductList({ product }: Props) {
   const router = useRouter();
 
   const reload = () => {

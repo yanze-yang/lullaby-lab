@@ -100,7 +100,7 @@ model Product {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   category    Category? @relation(fields: [categoryId], references: [id])
-  categoryId  String
+  categoryId  String?
   orders      Order[]
 }
 
@@ -124,12 +124,12 @@ model Client {
 
 model Order {
   id        String    @id @default(uuid())
-  date      DateTime
+  date      DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   notes     String?
-  addon     Float
+  addon     Float?
   Client    Client?   @relation(fields: [clientId], references: [id])
-  clientId  String
+  clientId  String?
   products  Product[]
 }

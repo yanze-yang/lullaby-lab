@@ -93,9 +93,10 @@ model Product {
   id          String    @id @default(uuid())
   code        String    @unique
   name        String
+  size        String
   price       Float
-  description String
-  image       String
+  description String?
+  image       String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   category    Category? @relation(fields: [categoryId], references: [id])
@@ -109,9 +110,26 @@ model Category {
   products Product[]
 }
 
+model Client {
+  id        String   @id @default(cuid())
+  name      String?
+  phone     String?
+  email     String?
+  wechat    String?
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+}
+
 model Order {
   id        String    @id @default(uuid())
+  date      DateTime
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  notes     String?
+  addon     Float
+  Client    Client?   @relation(fields: [clientId], references: [id])
+  clientId  String
   products  Product[]
 }

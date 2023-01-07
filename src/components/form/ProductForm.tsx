@@ -99,17 +99,18 @@ export default function ProductForm({
       <div className="mx-auto my-6 max-w-5xl">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-6 grid  gap-6 md:grid-cols-2">
-            {product ? (
+            {product && (
               <div>
                 <Field
                   label="id"
                   register={register}
                   required={true}
                   defaultValue={product.id}
+                  placeholder="Id will be generated automatically"
                   readOnly
                 />
               </div>
-            ) : null}
+            )}
             <div>
               <Field
                 label="code"
@@ -145,6 +146,23 @@ export default function ProductForm({
             </div>
             <div>
               <Field
+                label="size"
+                register={register}
+                required={true}
+                defaultValue={product?.size}
+              />
+              {errors.size && (
+                <span
+                  className="
+                text-sm text-red-500
+              "
+                >
+                  This field is required
+                </span>
+              )}
+            </div>
+            <div>
+              <Field
                 label="price"
                 register={register}
                 type="number"
@@ -165,35 +183,17 @@ export default function ProductForm({
               <Field
                 label="description"
                 register={register}
-                required={true}
-                defaultValue={product?.description}
+                required={false}
+                defaultValue={product?.description?.toString()}
               />
-              {errors.description && (
-                <span
-                  className="
-                text-sm text-red-500
-              "
-                >
-                  This field is required
-                </span>
-              )}
             </div>
             <div>
               <Field
                 label="image"
                 register={register}
-                required={true}
-                defaultValue={product?.image}
+                required={false}
+                defaultValue={product?.image?.toString()}
               />
-              {errors.image && (
-                <span
-                  className="
-                text-sm text-red-500
-              "
-                >
-                  This field is required
-                </span>
-              )}
             </div>
             <div>
               <label
@@ -207,9 +207,6 @@ export default function ProductForm({
                 className={`block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 `}
                 defaultValue={product?.categoryId}
               >
-                {/* <option value={product?.categoryId} disabled>
-                  {product?.category.name}
-                </option> */}
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}

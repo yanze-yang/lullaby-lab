@@ -4,6 +4,7 @@ const prisma = new PrismaClient();
 const products = [
   {
     name: "Lemon",
+    size: "4 inch",
     code: "LE",
     price: 4.5,
     description:
@@ -12,6 +13,7 @@ const products = [
   },
   {
     name: "Chocolate",
+    size: "4 inch",
     code: "CH",
     price: 4.5,
     description:
@@ -20,49 +22,52 @@ const products = [
   },
   {
     name: "Raspberry",
+    size: "4 inch",
     code: "RA",
     price: 4.5,
     description:
       "A fruity and flavorful macaron filled with a tart raspberry jam",
     image: "https://via.placeholder.com/150",
   },
-  {
-    name: "Pistachio",
-    code: "PI",
-    price: 4.5,
-    description:
-      "A nutty and fragrant macaron filled with a creamy pistachio buttercream",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    name: "Salted Caramel",
-    code: "SC",
-    price: 4.5,
-    description:
-      "A sweet and salty macaron filled with a gooey salted caramel sauce",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    name: "Maple",
-    code: "MA",
-    price: 4.5,
-    description:
-      "A warm and cozy macaron filled with a sweet maple syrup buttercream",
-    image: "https://via.placeholder.com/150",
-  },
+  // {
+  //   name: "Pistachio",
+  //   size: "4 inch",
+  //   code: "PI",
+  //   price: 4.5,
+  //   description:
+  //     "A nutty and fragrant macaron filled with a creamy pistachio buttercream",
+  //   image: "https://via.placeholder.com/150",
+  // },
+  // {
+  //   name: "Salted Caramel",
+  //   code: "SC",
+  //   price: 4.5,
+  //   description:
+  //     "A sweet and salty macaron filled with a gooey salted caramel sauce",
+  //   image: "https://via.placeholder.com/150",
+  // },
+  // {
+  //   name: "Maple",
+  //   size: "4 inch",
+  //   code: "MA",
+  //   price: 4.5,
+  //   description:
+  //     "A warm and cozy macaron filled with a sweet maple syrup buttercream",
+  //   image: "https://via.placeholder.com/150",
+  // },
 ];
 
 async function main() {
   await prisma.category.upsert({
-    where: { id: "151f1b59-68e6-4c97-81a8-fea553b1c27b" },
+    where: { id: "f139448d-2679-4848-8ede-71c97ef1ab8a" },
     update: {
-      name: "Macaron",
+      name: "Cake",
       products: {
         create: products,
       },
     },
     create: {
-      name: "Macaron",
+      name: "Cake",
       products: {
         create: products,
       },

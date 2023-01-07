@@ -9,6 +9,7 @@ import type { ProductFormData } from "../../types";
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   label:
     | "name"
+    | "size"
     | "id"
     | "code"
     | "image"
@@ -36,7 +37,8 @@ export const Field: React.FC<Props> = ({
         htmlFor={label}
         className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
       >
-        {label.charAt(0).toUpperCase() + label.slice(1)}
+        {label.charAt(0).toUpperCase() + label.slice(1)}{" "}
+        {required ? "*" : "(optional)"}
       </label>
 
       {handleChange ? (

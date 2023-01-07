@@ -17,6 +17,7 @@ export type ProductFormData = {
   id: string;
   code: string;
   name: string;
+  size: string;
   price: number;
   description: string;
   image: string;

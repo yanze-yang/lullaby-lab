@@ -27,7 +27,16 @@ export async function getServerSideProps() {
 }
 
 export default function ShopIndex({ products }: { products: IProduct[] }) {
-  if (products.length === 0) return <div>loading...</div>;
+  if (products.length === 0)
+    return (
+      <div className="h-[100vh] dark:bg-gray-900">
+        <Navbar />
+        <Searchbar />
+        <div className="text-center text-2xl text-gray-500 dark:text-gray-400">
+          No products found
+        </div>
+      </div>
+    );
 
   return (
     <div className="h-[100vh] dark:bg-gray-900">

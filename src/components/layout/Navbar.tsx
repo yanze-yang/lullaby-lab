@@ -1,8 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
-const Navbar = ({ page }: { page?: "shop" | "category" }) => {
+const Navbar = () => {
+  const isNotActiveStyle =
+    "block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white";
+
+  const isActiveStyle =
+    "block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700";
+
+  const router = useRouter();
+
+  const { pathname } = router;
+  console.log("pathname", pathname);
+
   return (
     <div>
       <nav className="top-0 left-0 z-20 w-full border-b border-gray-200 bg-white px-2 py-2.5 dark:border-gray-600 dark:bg-gray-900 sm:px-4">
@@ -18,16 +30,6 @@ const Navbar = ({ page }: { page?: "shop" | "category" }) => {
             </span>
           </a>
           <div className="flex md:order-2">
-            {page && (
-              <Link
-                href={`/${page}/create`}
-                type="button"
-                className="mr-3 rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 md:mr-0"
-              >
-                Create
-              </Link>
-            )}
-
             <button
               data-collapse-toggle="navbar-sticky"
               type="button"
@@ -59,16 +61,28 @@ const Navbar = ({ page }: { page?: "shop" | "category" }) => {
               <li>
                 <a
                   href="#"
-                  className="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700"
-                  aria-current="page"
+                  className="block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
                 >
-                  Home
+                  Dashboard
                 </a>
               </li>
               <li>
                 <Link
+                  href="/order"
+                  className={
+                    pathname === "/order" ? isActiveStyle : isNotActiveStyle
+                  }
+                  // aria-current="page"
+                >
+                  Order
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/shop"
-                  className="block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+                  className={
+                    pathname === "/shop" ? isActiveStyle : isNotActiveStyle
+                  }
                 >
                   Product
                 </Link>
@@ -76,18 +90,12 @@ const Navbar = ({ page }: { page?: "shop" | "category" }) => {
               <li>
                 <Link
                   href="/category"
-                  className="block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+                  className={
+                    pathname === "/category" ? isActiveStyle : isNotActiveStyle
+                  }
                 >
                   Category
                 </Link>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
-                >
-                  Contact
-                </a>
               </li>
             </ul>
           </div>

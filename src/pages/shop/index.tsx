@@ -3,6 +3,7 @@ import type { IProduct } from "../../types";
 import Navbar from "../../components/layout/Navbar";
 import { prisma } from "../../server/db/client";
 import ProductTable from "../../components/shop/ProductTable";
+import Searchbar from "../../components/shop/Searchbar";
 
 export async function getServerSideProps() {
   const products = await prisma.product.findMany({
@@ -30,7 +31,8 @@ export default function ShopIndex({ products }: { products: IProduct[] }) {
 
   return (
     <div className="h-[100vh] dark:bg-gray-900">
-      <Navbar page="shop" />
+      <Navbar />
+      <Searchbar />
       <ProductTable products={products} />
     </div>
   );

@@ -100,10 +100,18 @@ model Product {
   updatedAt   DateTime  @updatedAt
   category    Category? @relation(fields: [categoryId], references: [id])
   categoryId  String
+  orders      Order[]
 }
 
 model Category {
   id       String    @id @default(uuid())
   name     String
   products Product[]
+}
+
+model Order {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
 }

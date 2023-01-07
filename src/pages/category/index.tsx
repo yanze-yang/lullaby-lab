@@ -4,6 +4,8 @@ import Navbar from "../../components/layout/Navbar";
 import { prisma } from "../../server/db/client";
 import type { ICategory } from "../../types";
 
+// get current router path
+
 export async function getServerSideProps() {
   const categories = await prisma.category.findMany({
     include: {

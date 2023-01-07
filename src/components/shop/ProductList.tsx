@@ -39,9 +39,10 @@ export default function ProductList({ product }: Props) {
         {product.code}
       </th>
       <td className="py-4 px-6">{product.name}</td>
-      <td className="py-4 px-6">{product.description}</td>
+      <td className="py-4 px-6">{product.size}</td>
       <td className="py-4 px-6">{product.category.name}</td>
       <td className="py-4 px-6">{product.price}</td>
+      <td className="py-4 px-6">{product.description}</td>
       <td className="py-4 px-6">{product.image}</td>
       <td className="py-4 px-6 text-right">
         <Link

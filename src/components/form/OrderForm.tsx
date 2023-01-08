@@ -53,6 +53,14 @@ const OrderForm = ({ order, products, operation }: Props) => {
     };
   });
 
+  const defaultProductsOptions: IProductOption[] | undefined =
+    order?.products?.map((product) => {
+      return {
+        value: product.id,
+        label: product.name,
+      };
+    });
+
   //   const {
   //     register,
   //     handleSubmit,
@@ -60,10 +68,35 @@ const OrderForm = ({ order, products, operation }: Props) => {
   //   } = useForm<OrderFormData>();
 
   const onSubmit = (data: FormValues) => {
-    console.log("data", data);
-  };
-  console.log("order.date", order.date);
+    if (operation === "update" && order) {
+      // Convert price to number
 
+      const update = axios.patch(`/api/orders/${order.id}`, data).then(() => {
+        //  redirect();
+      });
+
+      toast.promise(update, {
+        loading: "Loading",
+        success: "Product updated",
+        error: "Error updating product",
+      });
+      // if has response, redirect
+    } else {
+      // Convert price to number
+      //  data.price = Number(data.price);
+      //  const product: Prisma.ProductUncheckedCreateInput = {
+      //    ...data,
+      //  };
+      //  const create = axios.post(`/api/products`, product).then(() => {
+      //    redirect();
+      //  });
+      // toast.promise(create, {
+      //   loading: "Loading",
+      //   success: "Product created",
+      //   error: "Error creating product",
+      // });
+    }
+  };
   return (
     <div className="h-[100vh] dark:bg-gray-900">
       <Navbar />
@@ -154,6 +187,7 @@ const OrderForm = ({ order, products, operation }: Props) => {
                     className="basic-multi-select"
                     classNamePrefix="select"
                     isMulti
+                    defaultValue={defaultProductsOptions}
                   />
                 )}
                 name="products"

@@ -4,19 +4,11 @@ import type {
   // useForm, // don't need this import
 } from "react-hook-form";
 
-import type { ProductFormData } from "../../types";
+import type { OrderFormData, ProductFormData } from "../../types";
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
-  label:
-    | "name"
-    | "size"
-    | "id"
-    | "code"
-    | "image"
-    | "price"
-    | "description"
-    | "categoryId";
-  register: UseFormRegister<ProductFormData>;
+  label: any;
+  register: any;
   required?: boolean;
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   // errors: any;

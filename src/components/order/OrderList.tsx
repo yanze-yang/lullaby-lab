@@ -112,12 +112,12 @@ export default function OrderList({ order }: Props) {
         </a>
       </td> */}
       <td className="py-4 px-6 text-right">
-        <a
-          // href={`/shop/${product.id}`}
+        <Link
+          href={`/order/${order.id}`}
           className="font-medium text-blue-600 hover:underline dark:text-blue-500"
         >
           Edit
-        </a>
+        </Link>
       </td>
       <td className="py-4 px-6 text-right">
         <a

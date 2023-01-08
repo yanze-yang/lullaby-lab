@@ -10,6 +10,7 @@ import ReactSelect from "react-select";
 
 import { InputStyle, InputStyleReadOnly, LabelStyle } from "./FormStyle";
 import moment from "moment";
+import type { Prisma } from "@prisma/client";
 
 interface IProductOption {
   value: string;
@@ -30,13 +31,6 @@ const OrderForm = ({ order, products, operation }: Props) => {
     };
   });
 
-  const defaultProductsOptions: IProductOption[] | undefined =
-    order?.products?.map((product) => {
-      return {
-        value: product.id,
-        label: product.name,
-      };
-    });
   type FormValues = {
     id: string;
     date: string;
@@ -44,6 +38,14 @@ const OrderForm = ({ order, products, operation }: Props) => {
     addon: string;
     products: IProductOption[];
   };
+
+  const defaultProductsOptions: IProductOption[] | undefined =
+    order?.products?.map((product) => {
+      return {
+        value: product.id,
+        label: product.name,
+      };
+    });
 
   const defaultValues: FormValues = {
     id: order?.id || "",
@@ -79,24 +81,31 @@ const OrderForm = ({ order, products, operation }: Props) => {
 
       toast.promise(update, {
         loading: "Loading",
-        success: "Product updated",
-        error: "Error updating product",
+        success: "Order updated",
+        error: "Error updating order",
       });
-      // if has response, redirect
     } else {
-      // Convert price to number
-      //  data.price = Number(data.price);
-      //  const product: Prisma.ProductUncheckedCreateInput = {
-      //    ...data,
-      //  };
-      //  const create = axios.post(`/api/products`, product).then(() => {
-      //    redirect();
-      //  });
-      // toast.promise(create, {
-      //   loading: "Loading",
-      //   success: "Product created",
-      //   error: "Error creating product",
-      // });
+      const newOrder: Prisma.OrderUncheckedCreateInput = {
+        date: moment(data.date).format(),
+        notes: data.notes,
+        addon: Number(data.addon),
+        products: {
+          connect: data.products.map((product) => {
+            return {
+              id: product.value,
+            };
+          }),
+        },
+      };
+
+      const create = axios.post(`/api/orders`, newOrder).then(() => {
+        redirect();
+      });
+      toast.promise(create, {
+        loading: "Loading",
+        success: "Order created",
+        error: "Error creating order",
+      });
     }
   };
   return (
@@ -106,18 +115,24 @@ const OrderForm = ({ order, products, operation }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-6 grid  gap-6 md:grid-cols-2">
             {/* ID field */}
-            <div>
-              <label htmlFor={"id"} className={LabelStyle}>
-                ID *
-              </label>
-              <input
-                {...register("id", { required: true })}
-                className={InputStyleReadOnly}
-                // defaultValue={order?.id}
-                placeholder="Id will be generated automatically"
-                readOnly
-              />
-            </div>
+            {order && (
+              <div>
+                <label htmlFor={"id"} className={LabelStyle}>
+                  ID *
+                </label>
+                <input
+                  {...register("id", { required: true })}
+                  className={InputStyleReadOnly}
+                  placeholder="Id will be generated automatically"
+                  readOnly
+                />
+                {errors.id && (
+                  <span className="text-sm text-red-500">
+                    This field is required
+                  </span>
+                )}
+              </div>
+            )}
             {/* Date field */}
             <div>
               <label htmlFor={"date"} className={LabelStyle}>
@@ -144,7 +159,6 @@ const OrderForm = ({ order, products, operation }: Props) => {
                   type="date"
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   placeholder="Select date"
-                  // defaultValue={moment(order?.date).format("YYYY-MM-DD")}
                 />
               </div>
               {errors.date && (
@@ -197,127 +211,6 @@ const OrderForm = ({ order, products, operation }: Props) => {
                 control={control}
               />
             </div>
-
-            {/* <div>
-              <label
-                htmlFor="categoryId"
-                className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Category
-              </label>
-              <Select
-                {...register(`products`, { required: true })}
-                defaultValue={[colourOptions[2], colourOptions[3]]}
-                isMulti
-                name="colors"
-                options={colourOptions}
-                className="basic-multi-select"
-                classNamePrefix="select"
-              />
-            </div> */}
-            {/* <div>
-              <Field
-                label="code"
-                register={register}
-                required={true}
-                defaultValue={product?.code}
-                placeholder="Create a unique code for your product"
-                handleChange={handleChange}
-              />
-              {errors.code && (
-                <span className="text-sm text-red-500">
-                  This field is required
-                </span>
-              )}
-              {!isUnique && (
-                <span className="text-sm text-red-500">
-                  This code is already in use
-                </span>
-              )}
-            </div>
-            <div>
-              <Field
-                label="name"
-                register={register}
-                required={true}
-                defaultValue={product?.name}
-              />
-              {errors.name && (
-                <span className="text-sm text-red-500">
-                  This field is required
-                </span>
-              )}
-            </div>
-            <div>
-              <Field
-                label="size"
-                register={register}
-                required={true}
-                defaultValue={product?.size}
-              />
-              {errors.size && (
-                <span
-                  className="
-                text-sm text-red-500
-              "
-                >
-                  This field is required
-                </span>
-              )}
-            </div>
-            <div>
-              <Field
-                label=""
-                register={register}
-                type="number"
-                required={true}
-                defaultValue={product?.price}
-              />
-              {errors.price && (
-                <span
-                  className="
-                text-sm text-red-500
-              "
-                >
-                  This field is required
-                </span>
-              )}
-            </div>
-            <div>
-              <Field
-                label="description"
-                register={register}
-                required={false}
-                defaultValue={product?.description?.toString()}
-              />
-            </div>
-            <div>
-              <Field
-                label="image"
-                register={register}
-                required={false}
-                defaultValue={product?.image?.toString()}
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="categoryId"
-                className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Category
-              </label>
-              <select
-                {...register("categoryId")}
-                className={`block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 `}
-                defaultValue={product?.categoryId?.toString()}
-              >
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            </div> */}
           </div>
           {/* Submit button */}
           <button

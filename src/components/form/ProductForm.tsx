@@ -56,6 +56,7 @@ export default function ProductForm({
       // if has response, redirect
     } else {
       // Convert price to number
+      console.log("data", data);
       data.price = Number(data.price);
       const product: Prisma.ProductUncheckedCreateInput = {
         ...data,
@@ -76,7 +77,6 @@ export default function ProductForm({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!codes) return;
     // if code is already in the database, show error
-
     setIsUnique(true);
     if (operation === "create" && codes.includes(e.target.value)) {
       setIsUnique(false);

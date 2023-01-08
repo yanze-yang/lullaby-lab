@@ -6,14 +6,14 @@ const products = async (req: NextApiRequest, res: NextApiResponse) => {
   // Update product
   console.log("data", req.body);
   if (req.method === "POST") {
-    // try {
-    //   const product = await prisma.product.create({
-    //     data: req.body,
-    //   });
-    //   return res.status(200).json(product);
-    // } catch (e) {
-    //   return res.status(500).json({ message: "Something went wrong" });
-    // }
+    try {
+      const order = await prisma.order.create({
+        data: req.body,
+      });
+      return res.status(200).json(order);
+    } catch (e) {
+      return res.status(500).json({ message: "Something went wrong" });
+    }
   }
 
   // get all products

@@ -19,8 +19,6 @@ interface IProductOption {
 type Props = {
   order?: IOrder;
   products: IProduct[];
-  //   categories: ICategory[];
-  //   codes: string[];
   operation: "create" | "update";
 };
 
@@ -58,7 +56,6 @@ const OrderForm = ({ order, products, operation }: Props) => {
   const {
     handleSubmit,
     register,
-    reset,
     control,
     formState: { errors },
   } = useForm<FormValues>({
@@ -322,28 +319,12 @@ const OrderForm = ({ order, products, operation }: Props) => {
               </select>
             </div> */}
           </div>
-          {/* {operation === "create" ? (
-            <button
-              type="submit"
-              className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
-              disabled={!isUnique}
-            >
-              Create
-            </button>
-          ) : (
-            <button
-              type="submit"
-              className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
-              disabled={!isUnique}
-            >
-              Update
-            </button>
-          )} */}
+          {/* Submit button */}
           <button
             type="submit"
             className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
           >
-            {operation === "create" ? "Create" : "Update"}
+            {operation === "update" ? "Update" : "Create"}
           </button>
         </form>
       </div>

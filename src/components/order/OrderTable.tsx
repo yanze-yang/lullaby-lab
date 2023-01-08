@@ -9,14 +9,20 @@ const OrderTable = ({ orders }: { orders: IOrder[] }) => {
         <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="py-3 px-6">
-              Client Name
+              Order
+            </th>
+            <th scope="col" className="py-3 px-6">
+              P/D Date
+            </th>
+            <th scope="col" className="py-3 px-6">
+              Client
             </th>
             <th scope="col" className="py-3 px-6">
               Products
             </th>
             <th scope="col" className="py-3 px-6">
               <div className="flex items-center">
-                Created At
+                Size
                 <a href="#">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +38,7 @@ const OrderTable = ({ orders }: { orders: IOrder[] }) => {
             </th>
             <th scope="col" className="py-3 px-6">
               <div className="flex items-center">
-                Price
+                Total
                 <a href="#">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -45,6 +51,12 @@ const OrderTable = ({ orders }: { orders: IOrder[] }) => {
                   </svg>
                 </a>
               </div>
+            </th>
+            <th scope="col" className="py-3 px-6">
+              Notes
+            </th>
+            <th scope="col" className="py-3 px-6">
+              Add-On
             </th>
 
             <th scope="col" className="py-3 px-6">

@@ -11,6 +11,7 @@ export async function getServerSideProps() {
     },
   });
 
+  console.log("orders", orders);
   // sort by created_at
   orders.sort((a, b) => {
     if (a.createdAt < b.createdAt) return 1;
@@ -29,7 +30,6 @@ const OrderIndex = ({ orders }: { orders: IOrder[] }) => {
   return (
     <div className="h-[100vh] dark:bg-gray-900">
       <Navbar />
-      {/* <ProductTable products={products} /> */}
       <OrderTable orders={orders} />
     </div>
   );

@@ -1,13 +1,10 @@
 import React from "react";
 import Navbar from "../layout/Navbar";
-import { Field } from "./Field";
 import axios from "axios";
 import { useRouter } from "next/router";
-import type { IProduct, ICategory, IOrder } from "../../types";
-
-import type { Prisma } from "@prisma/client";
+import type { IProduct, IOrder } from "../../types";
 import toast from "react-hot-toast";
-import { useForm, Controller, NestedValue } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 import ReactSelect from "react-select";
 
@@ -19,14 +16,6 @@ interface IProductOption {
   label: string;
 }
 
-export type FormValues = {
-  id: string;
-  date: string;
-  notes: string;
-  addon: string;
-  products: IProductOption[];
-};
-
 type Props = {
   order?: IOrder;
   products: IProduct[];
@@ -36,16 +25,6 @@ type Props = {
 };
 
 const OrderForm = ({ order, products, operation }: Props) => {
-  const {
-    handleSubmit,
-    register,
-    reset,
-    control,
-    formState: { errors },
-  } = useForm<FormValues>({
-    // defaultValues,
-  });
-
   const productsOptions: IProductOption[] = products?.map((product) => {
     return {
       value: product.id,
@@ -60,19 +39,45 @@ const OrderForm = ({ order, products, operation }: Props) => {
         label: product.name,
       };
     });
+  type FormValues = {
+    id: string;
+    date: string;
+    notes: string;
+    addon: string;
+    products: IProductOption[];
+  };
 
-  //   const {
-  //     register,
-  //     handleSubmit,
-  //     formState: { errors },
-  //   } = useForm<OrderFormData>();
+  const defaultValues: FormValues = {
+    id: order?.id || "",
+    date: moment().format("YYYY-MM-DD"),
+    notes: order?.notes || "",
+    addon: order?.addon?.toString() || "",
+    products: defaultProductsOptions || [],
+  };
+
+  const {
+    handleSubmit,
+    register,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues,
+  });
+
+  const router = useRouter();
+  const redirect = () => {
+    setTimeout(() => {
+      router.push("/order");
+    }, 1000);
+  };
 
   const onSubmit = (data: FormValues) => {
     if (operation === "update" && order) {
       // Convert price to number
 
       const update = axios.patch(`/api/orders/${order.id}`, data).then(() => {
-        //  redirect();
+        redirect();
       });
 
       toast.promise(update, {
@@ -111,7 +116,7 @@ const OrderForm = ({ order, products, operation }: Props) => {
               <input
                 {...register("id", { required: true })}
                 className={InputStyleReadOnly}
-                defaultValue={order?.id}
+                // defaultValue={order?.id}
                 placeholder="Id will be generated automatically"
                 readOnly
               />
@@ -142,7 +147,7 @@ const OrderForm = ({ order, products, operation }: Props) => {
                   type="date"
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   placeholder="Select date"
-                  defaultValue={moment(order?.date).format("YYYY-MM-DD")}
+                  // defaultValue={moment(order?.date).format("YYYY-MM-DD")}
                 />
               </div>
               {errors.date && (
@@ -170,6 +175,7 @@ const OrderForm = ({ order, products, operation }: Props) => {
                 {...register("addon", { required: false })}
                 className={InputStyle}
                 defaultValue={order?.addon?.toString()}
+                type="number"
               />
             </div>
             {/* Products field */}

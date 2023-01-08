@@ -3,7 +3,7 @@ import { type NextApiRequest, type NextApiResponse } from "next";
 import { Prisma } from "@prisma/client";
 import moment from "moment";
 
-const product = async (req: NextApiRequest, res: NextApiResponse) => {
+const order = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   // narrows the type of id to string
   if (typeof id !== "string")
@@ -26,6 +26,7 @@ const product = async (req: NextApiRequest, res: NextApiResponse) => {
 
   // Update product
   if (req.method === "PATCH") {
+    console.log("req.body", req.body);
     // get value from the array of objects and map it to a new array name value to id
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const productIDs = req.body.products.map((x: any) => {
@@ -73,4 +74,4 @@ const product = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default product;
+export default order;

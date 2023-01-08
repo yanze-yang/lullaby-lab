@@ -3,8 +3,6 @@ import { type NextApiRequest, type NextApiResponse } from "next";
 import { prisma } from "../../../server/db/client";
 
 const products = async (req: NextApiRequest, res: NextApiResponse) => {
-  // Update product
-  console.log("data", req.body);
   if (req.method === "POST") {
     try {
       const order = await prisma.order.create({
@@ -16,18 +14,17 @@ const products = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 
-  // get all products
   if (req.method === "GET") {
-    // try {
-    //   const products = await prisma.product.findMany({
-    //     include: {
-    //       category: true,
-    //     },
-    //   });
-    //   return res.status(200).json(products);
-    // } catch (e) {
-    //   return res.status(500).json({ message: "Something went wrong" });
-    // }
+    try {
+      const orders = await prisma.order.findMany({
+        include: {
+          products: true,
+        },
+      });
+      return res.status(200).json(orders);
+    } catch (e) {
+      return res.status(500).json({ message: "Something went wrong" });
+    }
   }
 
   // HTTP method not supported!

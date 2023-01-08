@@ -73,11 +73,23 @@ const OrderForm = ({ order, products, operation }: Props) => {
 
   const onSubmit = (data: FormValues) => {
     if (operation === "update" && order) {
-      // Convert price to number
-
-      const update = axios.patch(`/api/orders/${order.id}`, data).then(() => {
-        redirect();
-      });
+      const updateData: Prisma.OrderUncheckedUpdateInput = {
+        date: moment(data.date).format(),
+        notes: data.notes,
+        addon: Number(data.addon),
+        products: {
+          set: data.products.map((product) => {
+            return {
+              id: product.value,
+            };
+          }),
+        },
+      };
+      const update = axios
+        .patch(`/api/orders/${order.id}`, updateData)
+        .then(() => {
+          redirect();
+        });
 
       toast.promise(update, {
         loading: "Loading",

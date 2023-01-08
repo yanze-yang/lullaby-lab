@@ -1,7 +1,5 @@
 import { prisma } from "../../../server/db/client";
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { Prisma } from "@prisma/client";
-import moment from "moment";
 
 const order = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
@@ -11,42 +9,24 @@ const order = async (req: NextApiRequest, res: NextApiResponse) => {
 
   // get product by id
   if (req.method === "GET") {
-    // try {
-    //   const product = await prisma.product.findUnique({
-    //     where: { id },
-    //     include: {
-    //       category: true,
-    //     },
-    //   });
-    //   return res.status(200).json(product);
-    // } catch (e) {
-    //   return res.status(500).json({ message: "Something went wrong" });
-    // }
+    try {
+      const order = await prisma.order.findUnique({
+        where: { id },
+        include: {
+          products: true,
+        },
+      });
+      return res.status(200).json(order);
+    } catch (e) {
+      return res.status(500).json({ message: "Something went wrong" });
+    }
   }
 
-  // Update product
   if (req.method === "PATCH") {
-    console.log("req.body", req.body);
-    // get value from the array of objects and map it to a new array name value to id
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const productIDs = req.body.products.map((x: any) => {
-      return {
-        id: x.value,
-      };
-    });
-
     try {
       const order = await prisma.order.update({
         where: { id },
-        data: {
-          products: {
-            set: [],
-            connect: productIDs,
-          },
-          addon: Number(req.body.addon),
-          date: moment(req.body.date).format(),
-          notes: req.body.notes,
-        },
+        data: req.body,
       });
       return res.status(200).json(order);
     } catch (e) {

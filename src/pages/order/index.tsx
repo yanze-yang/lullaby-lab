@@ -1,4 +1,5 @@
 import React from "react";
+import EmptyContent from "../../components/layout/EmptyContent";
 import Navbar from "../../components/layout/Navbar";
 import OrderTable from "../../components/order/OrderTable";
 import { prisma } from "../../server/db/client";
@@ -30,7 +31,13 @@ const OrderIndex = ({ orders }: { orders: IOrder[] }) => {
   return (
     <div className="h-[100vh] dark:bg-gray-900">
       <Navbar />
-      <OrderTable orders={orders} />
+      {orders.length > 0 ? (
+        <OrderTable orders={orders} />
+      ) : (
+        <EmptyContent>
+          No orders yet. You can create a order by clicking the + button below.
+        </EmptyContent>
+      )}
     </div>
   );
 };

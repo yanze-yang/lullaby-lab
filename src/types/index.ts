@@ -1,4 +1,4 @@
-import type { Product, Category, Order } from "@prisma/client";
+import type { Product, Category, Order, Client } from "@prisma/client";
 import { type } from "os";
 
 export type ICategory = Category & {
@@ -12,6 +12,8 @@ export type IProduct = Product & {
 export type IOrder = Order & {
   products: Product[];
 };
+
+export type IClient = Client;
 
 export type ProductFormData = {
   id: string;

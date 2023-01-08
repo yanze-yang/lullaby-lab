@@ -29,17 +29,17 @@ export default function OrderList({ order }: Props) {
     }, 1000);
   };
 
-  //   const deleteProduct = (id: string) => {
-  //     const remove = axios.delete(`/api/products/${id}`).then(() => {
-  //       reload();
-  //     });
+  const deleteOrder = (id: string) => {
+    const remove = axios.delete(`/api/orders/${id}`).then(() => {
+      reload();
+    });
 
-  //     toast.promise(remove, {
-  //       loading: "Loading",
-  //       success: "Product deleted",
-  //       error: "Error deleting product",
-  //     });
-  //   };
+    toast.promise(remove, {
+      loading: "Loading",
+      success: "Product deleted",
+      error: "Error deleting product",
+    });
+  };
 
   return (
     <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -90,27 +90,6 @@ export default function OrderList({ order }: Props) {
       <td className="py-4 px-6">$ {total()}</td>
       <td className="py-4 px-6">{order.notes}</td>
       <td className="py-4 px-6">{order.addon}</td>
-      {/* <td className="py-4 px-6">{product.name}</td>
-      <td className="py-4 px-6">{product.description}</td>
-      <td className="py-4 px-6">{product.category.name}</td>
-      <td className="py-4 px-6">{product.price}</td>
-      <td className="py-4 px-6">{product.image}</td>
-      <td className="py-4 px-6 text-right">
-        <Link
-          href={`/shop/${product.id}`}
-          className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-        >
-          Edit
-        </Link>
-      </td>
-      <td className="py-4 px-6 text-right">
-        <a
-          className="cursor-pointer font-medium text-gray-300 hover:underline dark:text-gray-600"
-          onClick={() => deleteProduct(product.id)}
-        >
-          Delete
-        </a>
-      </td> */}
       <td className="py-4 px-6 text-right">
         <Link
           href={`/order/${order.id}`}
@@ -122,7 +101,7 @@ export default function OrderList({ order }: Props) {
       <td className="py-4 px-6 text-right">
         <a
           className="cursor-pointer font-medium text-gray-300 hover:underline dark:text-gray-600"
-          // onClick={() => deleteProduct(product.id)}
+          onClick={() => deleteOrder(order.id)}
         >
           Delete
         </a>

@@ -1,13 +1,12 @@
 import React from "react";
 import Navbar from "../layout/Navbar";
-import { Field } from "./Field";
 import axios from "axios";
 import { useRouter } from "next/router";
-import type { ProductFormData, IProduct, ICategory } from "../../types";
-import { useForm } from "react-hook-form";
-
-import type { Prisma } from "@prisma/client";
+import type { IProduct, ICategory } from "../../types";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { InputStyle, LabelStyle } from "./FormStyle";
+import type { Prisma } from "@prisma/client";
 
 type Props = {
   product?: IProduct;
@@ -16,34 +15,55 @@ type Props = {
   operation: "create" | "update";
 };
 
-export default function ProductForm({
-  product,
-  categories,
-  codes,
-  operation,
-}: Props) {
-  const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ProductFormData>();
-
+const ProductForm = ({ product, categories, codes, operation }: Props) => {
+  console.log("first", product);
   const [isUnique, setIsUnique] = React.useState(true);
 
+  type FormValues = {
+    code: string;
+    name: string;
+    size: string;
+    price: string;
+    description: string;
+    image: string;
+    categoryId: string;
+  };
+
+  const defaultValues: FormValues = {
+    code: product?.code || "",
+    name: product?.name || "",
+    size: product?.size || "",
+    price: product?.price.toString() || "",
+    description: product?.description || "",
+    image: product?.image || "",
+    categoryId: product?.category.id || "",
+  };
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues,
+  });
+
+  const router = useRouter();
   const redirect = () => {
     setTimeout(() => {
-      router.push("/shop");
+      router.push("/product");
     }, 1000);
   };
 
-  const onSubmit = (data: ProductFormData) => {
+  const onSubmit = (data: FormValues) => {
     if (operation === "update" && product) {
-      // Convert price to number
-      data.price = Number(data.price);
+      const DATA: Prisma.ProductUncheckedUpdateInput = {
+        ...data,
+        price: Number(data.price),
+      };
+      console.log("produt", product);
 
       const update = axios
-        .patch(`/api/products/${product.id}`, data)
+        .patch(`/api/products/${product.id}`, DATA)
         .then(() => {
           redirect();
         });
@@ -56,9 +76,9 @@ export default function ProductForm({
       // if has response, redirect
     } else {
       // Convert price to number
-      data.price = Number(data.price);
       const product: Prisma.ProductUncheckedCreateInput = {
         ...data,
+        price: Number(data.price),
       };
 
       const create = axios.post(`/api/products`, product).then(() => {
@@ -89,35 +109,21 @@ export default function ProductForm({
       setIsUnique(false);
     }
   };
-
-  if (!product && operation === "update") return null;
-
   return (
     <div className="h-[100vh] dark:bg-gray-900">
       <Navbar />
       <div className="mx-auto my-6 max-w-5xl">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-6 grid  gap-6 md:grid-cols-2">
-            {product && (
-              <div>
-                <Field
-                  label="id"
-                  register={register}
-                  required={true}
-                  defaultValue={product.id}
-                  placeholder="Id will be generated automatically"
-                  readOnly
-                />
-              </div>
-            )}
+            {/* Notes field */}
             <div>
-              <Field
-                label="code"
-                register={register}
-                required={true}
-                defaultValue={product?.code}
-                placeholder="Create a unique code for your product"
-                handleChange={handleChange}
+              <label htmlFor={"code"} className={LabelStyle}>
+                Code *
+              </label>
+              <input
+                {...register("code", { required: true })}
+                className={InputStyle}
+                onChange={handleChange}
               />
               {errors.code && (
                 <span className="text-sm text-red-500">
@@ -131,11 +137,12 @@ export default function ProductForm({
               )}
             </div>
             <div>
-              <Field
-                label="name"
-                register={register}
-                required={true}
-                defaultValue={product?.name}
+              <label htmlFor={"name"} className={LabelStyle}>
+                Name *
+              </label>
+              <input
+                {...register("name", { required: true })}
+                className={InputStyle}
               />
               {errors.name && (
                 <span className="text-sm text-red-500">
@@ -144,67 +151,60 @@ export default function ProductForm({
               )}
             </div>
             <div>
-              <Field
-                label="size"
-                register={register}
-                required={true}
-                defaultValue={product?.size}
+              <label htmlFor={"size"} className={LabelStyle}>
+                Size *
+              </label>
+              <input
+                {...register("size", { required: true })}
+                className={InputStyle}
               />
               {errors.size && (
-                <span
-                  className="
-                text-sm text-red-500
-              "
-                >
+                <span className="text-sm text-red-500">
                   This field is required
                 </span>
               )}
             </div>
             <div>
-              <Field
-                label="price"
-                register={register}
+              <label htmlFor={"price"} className={LabelStyle}>
+                Price *
+              </label>
+              <input
+                {...register("price", { required: true })}
+                className={InputStyle}
                 type="number"
-                required={true}
-                defaultValue={product?.price}
               />
               {errors.price && (
-                <span
-                  className="
-                text-sm text-red-500
-              "
-                >
+                <span className="text-sm text-red-500">
                   This field is required
                 </span>
               )}
             </div>
             <div>
-              <Field
-                label="description"
-                register={register}
-                required={false}
-                defaultValue={product?.description?.toString()}
+              <label htmlFor={"description"} className={LabelStyle}>
+                Description (optional)
+              </label>
+              <input
+                {...register("price", { required: false })}
+                className={InputStyle}
               />
             </div>
             <div>
-              <Field
-                label="image"
-                register={register}
-                required={false}
-                defaultValue={product?.image?.toString()}
+              <label htmlFor={"image"} className={LabelStyle}>
+                Image (optional)
+              </label>
+              <input
+                {...register("image", { required: false })}
+                className={InputStyle}
               />
             </div>
             <div>
-              <label
-                htmlFor="categoryId"
-                className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Category
+              <label htmlFor={"categoryId"} className={LabelStyle}>
+                Category (optional)
               </label>
               <select
                 {...register("categoryId")}
                 className={`block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 `}
-                defaultValue={product?.categoryId?.toString()}
+                // defaultValue={product?.categoryId?.toString()}
               >
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
@@ -214,6 +214,7 @@ export default function ProductForm({
               </select>
             </div>
           </div>
+          {/* Submit button */}
           <button
             type="submit"
             className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
@@ -225,4 +226,5 @@ export default function ProductForm({
       </div>
     </div>
   );
-}
+};
+export default ProductForm;

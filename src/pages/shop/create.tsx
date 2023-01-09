@@ -1,5 +1,5 @@
 import React from "react";
-import CreateProductForm from "../../components/form/ProductForm";
+import ProductForm from "../../components/form/ProductForm";
 import type { ICategory } from "../../types";
 import { prisma } from "../../server/db/client";
 
@@ -39,10 +39,6 @@ export default function Create({
   codes: string[];
 }) {
   return (
-    <CreateProductForm
-      operation="create"
-      categories={categories}
-      codes={codes}
-    />
+    <ProductForm operation="create" categories={categories} codes={codes} />
   );
 }

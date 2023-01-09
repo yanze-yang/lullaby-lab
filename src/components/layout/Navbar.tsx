@@ -13,7 +13,6 @@ const Navbar = () => {
   const router = useRouter();
 
   const { pathname } = router;
-  console.log("pathname", pathname);
 
   return (
     <div>
@@ -72,7 +71,6 @@ const Navbar = () => {
                   className={
                     pathname === "/order" ? isActiveStyle : isNotActiveStyle
                   }
-                  // aria-current="page"
                 >
                   Order
                 </Link>
@@ -95,6 +93,16 @@ const Navbar = () => {
                   }
                 >
                   Category
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className={
+                    pathname === "/contact" ? isActiveStyle : isNotActiveStyle
+                  }
+                >
+                  Contact
                 </Link>
               </li>
             </ul>

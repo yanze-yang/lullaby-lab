@@ -5,7 +5,6 @@ import React from "react";
 const CreateButton = () => {
   const router = useRouter();
   const path = router.pathname;
-  console.log("path", path);
 
   return (
     <div>

@@ -7,7 +7,6 @@ const order = async (req: NextApiRequest, res: NextApiResponse) => {
   if (typeof id !== "string")
     return res.status(400).json({ message: "Invalid id" });
 
-  // get product by id
   if (req.method === "GET") {
     try {
       const order = await prisma.order.findUnique({

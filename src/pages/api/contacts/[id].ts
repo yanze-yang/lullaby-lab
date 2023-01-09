@@ -1,7 +1,7 @@
 import { prisma } from "../../../server/db/client";
 import { type NextApiRequest, type NextApiResponse } from "next";
 
-const product = async (req: NextApiRequest, res: NextApiResponse) => {
+const order = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   // narrows the type of id to string
   if (typeof id !== "string")
@@ -9,26 +9,22 @@ const product = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === "GET") {
     try {
-      const product = await prisma.product.findUnique({
+      const contact = await prisma.contact.findUnique({
         where: { id },
-        include: {
-          category: true,
-        },
       });
-      return res.status(200).json(product);
+      return res.status(200).json(contact);
     } catch (e) {
       return res.status(500).json({ message: "Something went wrong" });
     }
   }
 
-  // Update product
   if (req.method === "PATCH") {
     try {
-      const product = await prisma.product.update({
+      const contact = await prisma.contact.update({
         where: { id },
         data: req.body,
       });
-      return res.status(200).json(product);
+      return res.status(200).json(contact);
     } catch (e) {
       return res.status(500).json({ message: "Something went wrong" });
     }
@@ -36,10 +32,10 @@ const product = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === "DELETE") {
     try {
-      const product = await prisma.product.delete({
+      const contact = await prisma.contact.delete({
         where: { id },
       });
-      return res.status(200).json(product);
+      return res.status(200).json(contact);
     } catch (e) {
       return res.status(500).json({ message: "Something went wrong" });
     }
@@ -54,4 +50,4 @@ const product = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default product;
+export default order;

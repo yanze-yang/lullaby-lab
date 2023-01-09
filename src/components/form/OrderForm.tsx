@@ -8,7 +8,7 @@ import { useForm, Controller } from "react-hook-form";
 
 import ReactSelect from "react-select";
 
-import { InputStyle, InputStyleReadOnly, LabelStyle } from "./FormStyle";
+import { InputStyle, LabelStyle } from "./FormStyle";
 import moment from "moment";
 import type { Prisma } from "@prisma/client";
 
@@ -32,7 +32,6 @@ const OrderForm = ({ order, products, operation }: Props) => {
   });
 
   type FormValues = {
-    id: string;
     date: string;
     notes: string;
     addon: string;
@@ -48,7 +47,6 @@ const OrderForm = ({ order, products, operation }: Props) => {
     });
 
   const defaultValues: FormValues = {
-    id: order?.id || "",
     date: moment().format("YYYY-MM-DD"),
     notes: order?.notes || "",
     addon: order?.addon?.toString() || "",
@@ -126,25 +124,6 @@ const OrderForm = ({ order, products, operation }: Props) => {
       <div className="mx-auto my-6 max-w-5xl">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-6 grid  gap-6 md:grid-cols-2">
-            {/* ID field */}
-            {order && (
-              <div>
-                <label htmlFor={"id"} className={LabelStyle}>
-                  ID *
-                </label>
-                <input
-                  {...register("id", { required: true })}
-                  className={InputStyleReadOnly}
-                  placeholder="Id will be generated automatically"
-                  readOnly
-                />
-                {errors.id && (
-                  <span className="text-sm text-red-500">
-                    This field is required
-                  </span>
-                )}
-              </div>
-            )}
             {/* Date field */}
             <div>
               <label htmlFor={"date"} className={LabelStyle}>

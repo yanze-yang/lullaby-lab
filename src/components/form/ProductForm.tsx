@@ -56,7 +56,6 @@ export default function ProductForm({
       // if has response, redirect
     } else {
       // Convert price to number
-      console.log("data", data);
       data.price = Number(data.price);
       const product: Prisma.ProductUncheckedCreateInput = {
         ...data,

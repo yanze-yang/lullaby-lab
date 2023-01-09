@@ -12,7 +12,6 @@ export async function getServerSideProps() {
     },
   });
 
-  console.log("orders", orders);
   // sort by created_at
   orders.sort((a, b) => {
     if (a.createdAt < b.createdAt) return 1;

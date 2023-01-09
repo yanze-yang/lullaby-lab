@@ -64,9 +64,6 @@ const ContactTable = ({ contacts }: { contacts: IContact[] }) => {
             </tr>
           </thead>
           <tbody>
-            {/* {orders.map((order) => (
-              <OrderList key={order.id} order={order} />
-            ))} */}
             {contacts.map((contact) => (
               <ContactList key={contact.id} contact={contact} />
             ))}

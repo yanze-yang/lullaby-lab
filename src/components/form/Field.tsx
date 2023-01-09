@@ -1,18 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import type {
-  UseFormRegister,
-  // useForm, // don't need this import
-} from "react-hook-form";
-
-import type { OrderFormData, ProductFormData } from "../../types";
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   label: any;
   register: any;
   required?: boolean;
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  // errors: any;
-  // props:
 };
 
 export const Field: React.FC<Props> = ({
@@ -20,7 +13,7 @@ export const Field: React.FC<Props> = ({
   register,
   required,
   handleChange,
-  // errors,
+
   ...props
 }) => {
   return (

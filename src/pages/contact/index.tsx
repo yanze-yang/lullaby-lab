@@ -1,8 +1,8 @@
 import React from "react";
-import type { IClient } from "../../types";
+import type { IContact } from "../../types";
 import Navbar from "../../components/layout/Navbar";
 import { prisma } from "../../server/db/client";
-import ProductTable from "../../components/shop/ProductTable";
+// import ProductTable from "../../components/shop/ProductTable";
 import EmptyContent from "../../components/layout/EmptyContent";
 
 export async function getServerSideProps() {
@@ -22,7 +22,7 @@ export async function getServerSideProps() {
   };
 }
 
-export default function ContactIndex({ contacts }: { contacts: IClient[] }) {
+export default function ContactIndex({ contacts }: { contacts: IContact[] }) {
   return (
     <div className="h-[100vh] dark:bg-gray-900">
       <Navbar />

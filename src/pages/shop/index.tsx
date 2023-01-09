@@ -3,7 +3,6 @@ import type { IProduct } from "../../types";
 import Navbar from "../../components/layout/Navbar";
 import { prisma } from "../../server/db/client";
 import ProductTable from "../../components/shop/ProductTable";
-import Searchbar from "../../components/shop/Searchbar";
 import EmptyContent from "../../components/layout/EmptyContent";
 
 export async function getServerSideProps() {
@@ -31,7 +30,6 @@ export default function ShopIndex({ products }: { products: IProduct[] }) {
   return (
     <div className="h-[100vh] dark:bg-gray-900">
       <Navbar />
-      <Searchbar />
       {products.length > 0 ? (
         <ProductTable products={products} />
       ) : (

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import React from "react";
 
@@ -47,7 +48,7 @@ const signin = () => {
                   clients.
                 </div>
                 <div>
-                  Log in to access your account, or click "Continue as guest" to
+                  Log in to access your account, or click Continue as guest to
                   explore the demo data.
                 </div>
               </div>

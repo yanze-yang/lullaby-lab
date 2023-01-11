@@ -77,9 +77,9 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  href="/shop"
+                  href="/product"
                   className={
-                    pathname === "/shop" ? isActiveStyle : isNotActiveStyle
+                    pathname === "/product" ? isActiveStyle : isNotActiveStyle
                   }
                 >
                   Product

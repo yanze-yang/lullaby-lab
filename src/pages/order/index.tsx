@@ -1,7 +1,6 @@
 import React from "react";
 import DashboardLayout from "../../components/layout/DashboradLayout";
 import EmptyContent from "../../components/layout/EmptyContent";
-import Navbar from "../../components/layout/Navbar";
 import OrderTable from "../../components/order/OrderTable";
 import { prisma } from "../../server/db/client";
 import type { IOrder } from "../../types";

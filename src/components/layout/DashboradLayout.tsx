@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   LaptopOutlined,
   NotificationOutlined,
@@ -6,11 +6,11 @@ import {
   BarcodeOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme } from "antd";
 import Navbar from "./Navbar";
 import { useRouter } from "next/router";
 
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -31,34 +31,6 @@ function getItem(
   } as MenuItem;
 }
 
-const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
-
-const items2: MenuProps["items"] = [
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-].map((icon, index) => {
-  const key = String(index + 1);
-
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-        onClick: () => console.log(`subnav ${key}`),
-      };
-    }),
-  };
-});
-
 type Props = {
   children: React.ReactNode;
 };
@@ -69,7 +41,7 @@ const DashboardLayout: React.FC<Props> = ({ children }: Props) => {
 
   const items: MenuItem[] = [
     getItem("Order", "/order", <UserOutlined />),
-    getItem("Product", "/shop", <BarcodeOutlined />),
+    getItem("Product", "/product", <BarcodeOutlined />),
     getItem("Category", "/category", <UserOutlined />, [
       getItem("Tom", "3"),
       getItem("Bill", "4"),

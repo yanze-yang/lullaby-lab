@@ -1,7 +1,12 @@
 import { prisma } from "../../../server/db/client";
 import { type NextApiRequest, type NextApiResponse } from "next";
+import { getSession } from "next-auth/react";
 
 const product = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getSession({ req });
+  if (!session) {
+    return res.status(401).json({ message: "Unauthorized." });
+  }
   const { id } = req.query;
   // narrows the type of id to string
   if (typeof id !== "string")
@@ -26,7 +31,10 @@ const product = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const product = await prisma.product.update({
         where: { id },
-        data: req.body,
+        data: {
+          ...req.body,
+          userId: session?.user?.id,
+        },
       });
       return res.status(200).json(product);
     } catch (e) {

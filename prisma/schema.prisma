@@ -48,13 +48,17 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Product       Product[]
+  Category      Category[]
+  Contact       Contact[]
+  Order         Order[]
 }
 
 model VerificationToken {
@@ -63,30 +67,6 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-// schema.prisma
-model Home {
-  id          String   @id @default(cuid())
-  image       String?
-  title       String
-  description String
-  price       Float
-  guests      Int
-  beds        Int
-  baths       Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  admin       Admin?   @relation(fields: [adminId], references: [id])
-  adminId     String
-}
-
-model Admin {
-  id        String   @id @default(cuid())
-  username  String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  homes     Home[]
 }
 
 model Product {
@@ -102,12 +82,16 @@ model Product {
   category    Category? @relation(fields: [categoryId], references: [id])
   categoryId  String?
   orders      Order[]
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?
 }
 
 model Category {
   id       String    @id @default(uuid())
   name     String
   products Product[]
+  user     User?     @relation(fields: [userId], references: [id])
+  userId   String?
 }
 
 model Contact {
@@ -121,6 +105,8 @@ model Contact {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   orders    Order[]
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 }
 
 model Order {
@@ -133,4 +119,6 @@ model Order {
   contact   Contact?  @relation(fields: [contactId], references: [id])
   contactId String?
   products  Product[]
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    String?
 }

@@ -60,7 +60,6 @@ const ProductForm = ({ product, categories, codes, operation }: Props) => {
         ...data,
         price: Number(data.price),
       };
-      console.log("produt", product);
 
       const update = axios
         .patch(`/api/products/${product.id}`, DATA)

@@ -23,7 +23,7 @@ export async function getServerSideProps() {
   };
 }
 
-const OrderIndex = ({ categories }: { categories: ICategory[] }) => {
+const CategoryIndex = ({ categories }: { categories: ICategory[] }) => {
   return (
     <DashboardLayout>
       {categories.length > 0 ? (
@@ -36,4 +36,4 @@ const OrderIndex = ({ categories }: { categories: ICategory[] }) => {
   );
 };
 
-export default OrderIndex;
+export default CategoryIndex;

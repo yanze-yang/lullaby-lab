@@ -2,9 +2,8 @@ import React from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
-import type { ICategory, IOrder } from "../../types";
+import type { ICategory } from "../../types";
 import toast from "react-hot-toast";
-import moment from "moment";
 
 interface Props {
   category: ICategory;
@@ -20,14 +19,14 @@ export default function CategoryList({ category }: Props) {
   };
 
   const deleteCategory = (id: string) => {
-    // const remove = axios.delete(`/api/orders/${id}`).then(() => {
-    //   reload();
-    // });
-    // toast.promise(remove, {
-    //   loading: "Loading",
-    //   success: "Product deleted",
-    //   error: "Error deleting product",
-    // });
+    const remove = axios.delete(`/api/categories/${id}`).then(() => {
+      reload();
+    });
+    toast.promise(remove, {
+      loading: "Loading",
+      success: "Category deleted",
+      error: "Error deleting category",
+    });
   };
 
   return (
@@ -38,22 +37,19 @@ export default function CategoryList({ category }: Props) {
       >
         {category.name}
       </th>
-      <td className="py-4 px-6"></td>
+      {/* <td className="py-4 px-6"></td> */}
       <td className="py-4 px-6 text-right">
-        {/* <Link
-          href={`/order/${order.id}`}
+        <Link
+          href={`/category/${category.id}`}
           className="font-medium text-blue-600 hover:underline dark:text-blue-500"
         >
           Edit
-        </Link> */}
-        <a className="font-medium text-blue-600 hover:underline dark:text-blue-500">
-          Edit
-        </a>
+        </Link>
       </td>
       <td className="py-4 px-6 text-right">
         <a
           className="cursor-pointer font-medium text-gray-300 hover:underline dark:text-gray-600"
-          //   onClick={() => deleteOrder(order.id)}
+          onClick={() => deleteCategory(category.id)}
         >
           Delete
         </a>

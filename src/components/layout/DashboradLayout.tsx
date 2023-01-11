@@ -74,7 +74,7 @@ const DashboardLayout: React.FC<Props> = ({ children }: Props) => {
           items={items1}
         />
       </Header> */}
-      <Layout>
+      <Layout style={{ backgroundColor: "#111827" }}>
         <Sider width={200} style={{ background: colorBgContainer }}>
           <Menu
             theme="dark"
@@ -87,13 +87,13 @@ const DashboardLayout: React.FC<Props> = ({ children }: Props) => {
             onClick={onClick}
           />
         </Sider>
-        <Layout style={{ padding: "0 24px 24px", background: "#111827" }}>
+        <Layout style={{ padding: "0 24px 24px", backgroundColor: "#111827" }}>
           <Content
             style={{
               padding: 24,
               margin: 0,
               minHeight: 280,
-              background: "#111827",
+              backgroundColor: "#111827",
             }}
           >
             {children}

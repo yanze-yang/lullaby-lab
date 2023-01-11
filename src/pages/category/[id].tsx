@@ -1,17 +1,28 @@
+import React from "react";
 import { prisma } from "../../server/db/client";
-import type { IProduct } from "../../types";
+import type { ICategory } from "../../types";
+import CategoryForm from "../../components/form/CategoryForm";
 
-const List = (product: IProduct) => {
-  if (!product) return null;
+export async function getStaticProps({ params }: { params: { id: string } }) {
+  const category = await prisma.category.findUnique({
+    where: { id: params.id },
+  });
 
-  return (
-    <div>
-      <h1>{product.name}</h1>
-      <p>{product.description}</p>
-      <p>{product.price}</p>
-    </div>
-  );
-};
+  if (category) {
+    return {
+      props: {
+        category: JSON.parse(JSON.stringify(category)),
+      },
+    };
+  }
+
+  return {
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
+  };
+}
 
 export async function getStaticPaths() {
   const categories = await prisma.category.findMany({
@@ -26,24 +37,9 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }: { params: { id: string } }) {
-  // Get the current product from the database
-  const category = await prisma.category.findUnique({
-    where: { id: params.id },
-  });
+const EditCategory = ({ category }: { category: ICategory }) => {
+  if (!category) return null;
+  return <CategoryForm operation="update" category={category} />;
+};
 
-  if (category) {
-    return {
-      props: JSON.parse(JSON.stringify(category)),
-    };
-  }
-
-  return {
-    redirect: {
-      destination: "/",
-      permanent: false,
-    },
-  };
-}
-
-export default List;
+export default EditCategory;

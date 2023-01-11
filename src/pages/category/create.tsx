@@ -1,5 +1,4 @@
 import React from "react";
-import type { IProduct } from "../../types";
 import CategoryForm from "../../components/form/CategoryForm";
 
 export async function getStaticProps() {

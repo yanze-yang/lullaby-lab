@@ -2,20 +2,13 @@ import React from "react";
 import Navbar from "../layout/Navbar";
 import axios from "axios";
 import { useRouter } from "next/router";
-import type { IProduct, IOrder, ICategory } from "../../types";
+import type { ICategory } from "../../types";
 import toast from "react-hot-toast";
-import { useForm, Controller } from "react-hook-form";
-
-import ReactSelect from "react-select";
+import { useForm } from "react-hook-form";
 
 import { InputStyle, LabelStyle } from "./FormStyle";
-import moment from "moment";
-import type { Prisma } from "@prisma/client";
 
-interface IProductOption {
-  value: string;
-  label: string;
-}
+import type { Prisma } from "@prisma/client";
 
 type Props = {
   category?: ICategory;
@@ -34,7 +27,7 @@ const CategoryForm = ({ category, operation }: Props) => {
   const {
     handleSubmit,
     register,
-    control,
+
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues,
@@ -43,7 +36,7 @@ const CategoryForm = ({ category, operation }: Props) => {
   const router = useRouter();
   const redirect = () => {
     setTimeout(() => {
-      router.push("/order");
+      router.push("/category");
     }, 1000);
   };
 

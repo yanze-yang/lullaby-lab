@@ -1,6 +1,5 @@
 import React from "react";
 import type { IContact } from "../../types";
-import Navbar from "../../components/layout/Navbar";
 import { prisma } from "../../server/db/client";
 // import ProductTable from "../../components/product/ProductTable";
 import EmptyContent from "../../components/layout/EmptyContent";

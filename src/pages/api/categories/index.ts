@@ -1,9 +1,9 @@
+import type { Prisma } from "@prisma/client";
 import { type NextApiRequest, type NextApiResponse } from "next";
 
 import { prisma } from "../../../server/db/client";
 
 const categories = async (req: NextApiRequest, res: NextApiResponse) => {
-  // get all categories
   if (req.method === "GET") {
     try {
       const categories = await prisma.category.findMany({
@@ -11,18 +11,18 @@ const categories = async (req: NextApiRequest, res: NextApiResponse) => {
           products: true,
         },
       });
-
       return res.status(200).json(categories);
     } catch (e) {
       return res.status(500).json({ message: "Something went wrong" });
     }
   }
 
-  // Ctrete category
   if (req.method === "POST") {
+    const data: Prisma.CategoryCreateInput = req.body;
+
     try {
       const category = await prisma.category.create({
-        data: req.body,
+        data,
       });
       return res.status(200).json(category);
     } catch (e) {

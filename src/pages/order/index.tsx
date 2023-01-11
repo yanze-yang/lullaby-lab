@@ -34,7 +34,7 @@ const OrderIndex = ({ orders }: { orders: IOrder[] }) => {
         <OrderTable orders={orders} />
       ) : (
         <EmptyContent>
-          No orders yet. You can create a order by clicking the + button below.
+          No orders yet. Create one by clicking the + button below.
         </EmptyContent>
       )}
       <CreateButton />

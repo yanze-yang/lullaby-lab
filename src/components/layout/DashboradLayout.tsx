@@ -1,9 +1,10 @@
 import React from "react";
 import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
-  BarcodeOutlined,
+  SnippetsOutlined,
+  FundOutlined,
+  UserSwitchOutlined,
+  ShopOutlined,
+  LinkOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
@@ -40,18 +41,11 @@ const DashboardLayout: React.FC<Props> = ({ children }: Props) => {
   const path = router.pathname;
 
   const items: MenuItem[] = [
-    getItem("Order", "/order", <UserOutlined />),
-    getItem("Product", "/product", <BarcodeOutlined />),
-    getItem("Category", "/category", <UserOutlined />, [
-      getItem("Tom", "3"),
-      getItem("Bill", "4"),
-      getItem("Alex", "5"),
-    ]),
-    getItem("Team", "sub2", <UserOutlined />, [
-      getItem("Team 1", "6"),
-      getItem("Team 2", "8"),
-    ]),
-    getItem("Files", "9", <UserOutlined />),
+    getItem("Dashboard", "/dashboard", <FundOutlined />),
+    getItem("Order", "/order", <SnippetsOutlined />),
+    getItem("Product", "/product", <ShopOutlined />),
+    getItem("Category", "/category", <LinkOutlined />),
+    getItem("Contact", "/contact", <UserSwitchOutlined />),
   ];
   const {
     token: { colorBgContainer },

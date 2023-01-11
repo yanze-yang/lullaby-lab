@@ -166,7 +166,6 @@ const OrderForm = ({ order, products, operation }: Props) => {
               <input
                 {...register("notes", { required: false })}
                 className={InputStyle}
-                defaultValue={order?.notes?.toString()}
               />
             </div>
             <div>
@@ -176,7 +175,6 @@ const OrderForm = ({ order, products, operation }: Props) => {
               <input
                 {...register("addon", { required: false })}
                 className={InputStyle}
-                defaultValue={order?.addon?.toString()}
                 type="number"
               />
             </div>
@@ -195,7 +193,6 @@ const OrderForm = ({ order, products, operation }: Props) => {
                     className="basic-multi-select"
                     classNamePrefix="select"
                     isMulti
-                    defaultValue={defaultProductsOptions}
                   />
                 )}
                 name="products"

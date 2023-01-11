@@ -4,6 +4,7 @@ import Navbar from "../../components/layout/Navbar";
 import { prisma } from "../../server/db/client";
 import ProductTable from "../../components/shop/ProductTable";
 import EmptyContent from "../../components/layout/EmptyContent";
+import DashboardLayout from "../../components/layout/DashboradLayout";
 
 export async function getServerSideProps() {
   const products = await prisma.product.findMany({
@@ -28,13 +29,12 @@ export async function getServerSideProps() {
 
 export default function ShopIndex({ products }: { products: IProduct[] }) {
   return (
-    <div className="h-[100vh] dark:bg-gray-900">
-      <Navbar />
+    <DashboardLayout>
       {products.length > 0 ? (
         <ProductTable products={products} />
       ) : (
         <EmptyContent>No products found</EmptyContent>
       )}
-    </div>
+    </DashboardLayout>
   );
 }

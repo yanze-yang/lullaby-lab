@@ -1,6 +1,5 @@
 import React from "react";
 import type { IProduct } from "../../types";
-import CreateButton from "../button/CreateButton";
 import ProductList from "./ProductList";
 
 const ProductTable: React.FC<{ products: IProduct[] }> = ({ products }) => {
@@ -111,7 +110,6 @@ const ProductTable: React.FC<{ products: IProduct[] }> = ({ products }) => {
           </tbody>
         </table>
       </div>
-      <CreateButton />
     </>
   );
 };

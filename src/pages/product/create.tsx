@@ -15,7 +15,7 @@ export async function getStaticProps() {
   });
   const codes = productsWithCode.map((product) => product.code);
 
-  if (categories) {
+  if (categories && codes) {
     return {
       props: {
         categories: JSON.parse(JSON.stringify(categories)),

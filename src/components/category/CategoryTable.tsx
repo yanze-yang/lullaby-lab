@@ -1,8 +1,8 @@
 import React from "react";
-import type { IOrder } from "../../types";
-import OrderList from "./OrderList";
+import type { ICategory } from "../../types";
+import CategoryList from "./CategoryList";
 
-const OrderTable = ({ orders }: { orders: IOrder[] }) => {
+const CategoryTable = ({ categories }: { categories: ICategory[] }) => {
   return (
     <>
       <div className="relative m-6 overflow-x-auto shadow-md sm:rounded-3xl">
@@ -69,8 +69,11 @@ const OrderTable = ({ orders }: { orders: IOrder[] }) => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+            {/* {orders.map((order) => (
               <OrderList key={order.id} order={order} />
+            ))} */}
+            {categories.map((category) => (
+              <CategoryList key={category.id} category={category} />
             ))}
           </tbody>
         </table>
@@ -79,4 +82,4 @@ const OrderTable = ({ orders }: { orders: IOrder[] }) => {
   );
 };
 
-export default OrderTable;
+export default CategoryTable;

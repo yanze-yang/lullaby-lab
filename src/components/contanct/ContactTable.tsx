@@ -1,8 +1,6 @@
 import React from "react";
 import type { IContact } from "../../types";
-import CreateButton from "../button/CreateButton";
 import ContactList from "./ContanctList";
-// import OrderList from "./OrderList";
 
 const ContactTable = ({ contacts }: { contacts: IContact[] }) => {
   return (
@@ -70,7 +68,6 @@ const ContactTable = ({ contacts }: { contacts: IContact[] }) => {
           </tbody>
         </table>
       </div>
-      <CreateButton />
     </>
   );
 };

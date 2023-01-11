@@ -87,11 +87,13 @@ model Product {
 }
 
 model Category {
-  id       String    @id @default(uuid())
-  name     String
-  products Product[]
-  user     User?     @relation(fields: [userId], references: [id])
-  userId   String?
+  id        String    @id @default(uuid())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    String?
 }
 
 model Contact {

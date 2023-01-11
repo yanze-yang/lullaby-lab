@@ -5,6 +5,8 @@ import { prisma } from "../../server/db/client";
 // import ProductTable from "../../components/product/ProductTable";
 import EmptyContent from "../../components/layout/EmptyContent";
 import ContactTable from "../../components/contanct/ContactTable";
+import DashboardLayout from "../../components/layout/DashboradLayout";
+import CreateButton from "../../components/button/CreateButton";
 
 export async function getServerSideProps() {
   const contacts = await prisma.contact.findMany();
@@ -25,13 +27,13 @@ export async function getServerSideProps() {
 
 export default function ContactIndex({ contacts }: { contacts: IContact[] }) {
   return (
-    <div className="h-[100vh] dark:bg-gray-900">
-      <Navbar />
+    <DashboardLayout>
       {contacts.length > 0 ? (
         <ContactTable contacts={contacts} />
       ) : (
         <EmptyContent>No contacts found</EmptyContent>
       )}
-    </div>
+      <CreateButton />
+    </DashboardLayout>
   );
 }

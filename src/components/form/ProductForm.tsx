@@ -16,7 +16,6 @@ type Props = {
 };
 
 const ProductForm = ({ product, categories, codes, operation }: Props) => {
-  console.log("first", product);
   const [isUnique, setIsUnique] = React.useState(true);
 
   type FormValues = {
@@ -36,7 +35,7 @@ const ProductForm = ({ product, categories, codes, operation }: Props) => {
     price: product?.price.toString() || "",
     description: product?.description || "",
     image: product?.image || "",
-    categoryId: product?.category.id || "",
+    categoryId: product?.category.id || categories[0]?.id || "",
   };
 
   const {

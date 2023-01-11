@@ -1,4 +1,5 @@
 import React from "react";
+import CreateButton from "../../components/button/CreateButton";
 import DashboardLayout from "../../components/layout/DashboradLayout";
 import EmptyContent from "../../components/layout/EmptyContent";
 import OrderTable from "../../components/order/OrderTable";
@@ -36,6 +37,7 @@ const OrderIndex = ({ orders }: { orders: IOrder[] }) => {
           No orders yet. You can create a order by clicking the + button below.
         </EmptyContent>
       )}
+      <CreateButton />
     </DashboardLayout>
   );
 };

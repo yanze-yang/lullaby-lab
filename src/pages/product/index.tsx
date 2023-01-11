@@ -7,6 +7,7 @@ import EmptyContent from "../../components/layout/EmptyContent";
 import DashboardLayout from "../../components/layout/DashboradLayout";
 import type { GetSessionParams } from "next-auth/react";
 import { getSession } from "next-auth/react";
+import CreateButton from "../../components/button/CreateButton";
 
 export async function getServerSideProps(context: GetSessionParams) {
   // Check if user is authenticated
@@ -58,6 +59,7 @@ export default function ShopIndex({ products }: { products: IProduct[] }) {
       ) : (
         <EmptyContent>No products found</EmptyContent>
       )}
+      <CreateButton />
     </DashboardLayout>
   );
 }

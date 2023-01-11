@@ -1,17 +1,21 @@
 import React from "react";
-import Item from "../../components/category/Item";
-import Navbar from "../../components/layout/Navbar";
+import CreateButton from "../../components/button/CreateButton";
+import CategoryTable from "../../components/category/CategoryTable";
+import DashboardLayout from "../../components/layout/DashboradLayout";
+import EmptyContent from "../../components/layout/EmptyContent";
 import { prisma } from "../../server/db/client";
 import type { ICategory } from "../../types";
 
-// get current router path
-
 export async function getServerSideProps() {
-  const categories = await prisma.category.findMany({
-    include: {
-      products: true,
-    },
+  const categories = await prisma.category.findMany();
+
+  // sort by created_at
+  categories.sort((a, b) => {
+    if (a.createdAt < b.createdAt) return 1;
+    if (a.createdAt > b.createdAt) return -1;
+    return 0;
   });
+
   return {
     props: {
       categories: JSON.parse(JSON.stringify(categories)),
@@ -19,38 +23,17 @@ export async function getServerSideProps() {
   };
 }
 
-export default function CategoryIndex({
-  categories,
-}: {
-  categories: ICategory[];
-}) {
-  if (categories.length === 0) return <div>loading...</div>;
+const OrderIndex = ({ categories }: { categories: ICategory[] }) => {
   return (
-    <div className="h-[100vh] dark:bg-gray-900">
-      <Navbar />
-      <div className="relative m-6 overflow-x-auto shadow-md sm:rounded-3xl">
-        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="py-3 px-6">
-                Category name
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Products count
-              </th>
-
-              <th scope="col" className="py-3 px-6">
-                <span className="sr-only">Edit</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {categories.map((category) => (
-              <Item key={category.id} category={category} />
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <DashboardLayout>
+      {categories.length > 0 ? (
+        <CategoryTable categories={categories} />
+      ) : (
+        <EmptyContent>No categories found</EmptyContent>
+      )}
+      <CreateButton />
+    </DashboardLayout>
   );
-}
+};
+
+export default OrderIndex;

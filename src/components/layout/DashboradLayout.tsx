@@ -1,17 +1,16 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
+  LaptopOutlined,
+  NotificationOutlined,
   UserOutlined,
+  BarcodeOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import Navbar from "./Navbar";
+import { useRouter } from "next/router";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -19,87 +18,115 @@ function getItem(
   label: React.ReactNode,
   key: React.Key,
   icon?: React.ReactNode,
-  children?: MenuItem[]
+
+  children?: MenuItem[],
+  onClick?: () => void
 ): MenuItem {
   return {
     key,
     icon,
     children,
     label,
+    onClick,
   } as MenuItem;
 }
 
-const items: MenuItem[] = [
-  getItem("Option 1", "1", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("Files", "9", <FileOutlined />),
-];
+const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
+  key,
+  label: `nav ${key}`,
+}));
 
-const DashboardLayout: React.FC<{
+const items2: MenuProps["items"] = [
+  UserOutlined,
+  LaptopOutlined,
+  NotificationOutlined,
+].map((icon, index) => {
+  const key = String(index + 1);
+
+  return {
+    key: `sub${key}`,
+    icon: React.createElement(icon),
+    label: `subnav ${key}`,
+
+    children: new Array(4).fill(null).map((_, j) => {
+      const subKey = index * 4 + j + 1;
+      return {
+        key: subKey,
+        label: `option${subKey}`,
+        onClick: () => console.log(`subnav ${key}`),
+      };
+    }),
+  };
+});
+
+type Props = {
   children: React.ReactNode;
-}> = ({ children }: { children: React.ReactNode }) => {
-  const [collapsed, setCollapsed] = useState(false);
+};
+
+const DashboardLayout: React.FC<Props> = ({ children }: Props) => {
+  const router = useRouter();
+  const path = router.pathname;
+
+  const items: MenuItem[] = [
+    getItem("Order", "/order", <UserOutlined />),
+    getItem("Product", "/shop", <BarcodeOutlined />),
+    getItem("Category", "/category", <UserOutlined />, [
+      getItem("Tom", "3"),
+      getItem("Bill", "4"),
+      getItem("Alex", "5"),
+    ]),
+    getItem("Team", "sub2", <UserOutlined />, [
+      getItem("Team 1", "6"),
+      getItem("Team 2", "8"),
+    ]),
+    getItem("Files", "9", <UserOutlined />),
+  ];
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const onClick: MenuProps["onClick"] = (e) => {
+    // console.log("click ", e);
+    router.push(e.key);
+  };
+
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-      >
-        <div
-          style={{
-            paddingTop: 16,
-            height: 64,
-            margin: 16,
-            // background: "rgba(255, 255, 255, 0.2)",
-          }}
-        >
-          <a href="https://flowbite.com/" className="flex items-center">
-            <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              className="mr-3 h-6 sm:h-9"
-              alt="Flowbite Logo"
-            />
-            <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-              Flowbite
-            </span>
-          </a>
-        </div>
+    <Layout style={{ height: "100vh" }}>
+      <Navbar />
+      {/* <Header className="header">
+        <div className="logo" />
         <Menu
           theme="dark"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
+          mode="horizontal"
+          defaultSelectedKeys={["2"]}
+          items={items1}
         />
-      </Sider>
-      <Layout
-        className="site-layout"
-        style={{ backgroundColor: "rgb(17 24 39)" }}
-      >
-        <Navbar />
-        <Content style={{ margin: "0 16px" }}>{children}</Content>
-        <Footer
-          style={{
-            textAlign: "center",
-            backgroundColor: "rgb(17 24 39)",
-            color: "#dcdcdc",
-          }}
-        >
-          Supa ©2023 Created by Lullaby Lab
-        </Footer>
+      </Header> */}
+      <Layout>
+        <Sider width={200} style={{ background: colorBgContainer }}>
+          <Menu
+            theme="dark"
+            mode="inline"
+            // defaultSelectedKeys={["1"]}
+            // defaultOpenKeys={["sub1"]}
+            selectedKeys={[path]}
+            style={{ height: "100%", borderRight: 0 }}
+            items={items}
+            onClick={onClick}
+          />
+        </Sider>
+        <Layout style={{ padding: "0 24px 24px", background: "#111827" }}>
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: "#111827",
+            }}
+          >
+            {children}
+          </Content>
+        </Layout>
       </Layout>
     </Layout>
   );

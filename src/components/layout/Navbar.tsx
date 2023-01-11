@@ -17,7 +17,17 @@ const Navbar = () => {
   return (
     <div>
       <nav className="top-0 left-0 z-20 w-full border-b border-gray-200 bg-white px-2 py-2.5 dark:border-gray-600 dark:bg-gray-900 sm:px-4">
-        <div className="container mx-auto flex flex-wrap items-center justify-center">
+        <div className="container mx-auto flex flex-wrap items-center justify-between">
+          <a href="https://flowbite.com/" className="flex items-center">
+            <img
+              src="https://flowbite.com/docs/images/logo.svg"
+              className="mr-3 h-6 sm:h-9"
+              alt="Flowbite Logo"
+            />
+            <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+              Flowbite
+            </span>
+          </a>
           <div className="flex md:order-2">
             <button
               data-collapse-toggle="navbar-sticky"

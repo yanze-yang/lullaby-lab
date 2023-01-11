@@ -2,6 +2,7 @@ import React from "react";
 import ProductForm from "../../components/form/ProductForm";
 import type { ICategory } from "../../types";
 import { prisma } from "../../server/db/client";
+import DashboardLayout from "../../components/layout/DashboradLayout";
 
 export async function getStaticProps() {
   const categories = await prisma.category.findMany({
@@ -39,6 +40,8 @@ export default function Create({
   codes: string[];
 }) {
   return (
-    <ProductForm operation="create" categories={categories} codes={codes} />
+    <DashboardLayout>
+      <ProductForm operation="create" categories={categories} codes={codes} />
+    </DashboardLayout>
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import DashboardLayout from "../../components/layout/DashboradLayout";
 import EmptyContent from "../../components/layout/EmptyContent";
 import Navbar from "../../components/layout/Navbar";
 import OrderTable from "../../components/order/OrderTable";
@@ -28,8 +29,7 @@ export async function getServerSideProps() {
 
 const OrderIndex = ({ orders }: { orders: IOrder[] }) => {
   return (
-    <div className="h-[100vh] dark:bg-gray-900">
-      <Navbar />
+    <DashboardLayout>
       {orders.length > 0 ? (
         <OrderTable orders={orders} />
       ) : (
@@ -37,7 +37,7 @@ const OrderIndex = ({ orders }: { orders: IOrder[] }) => {
           No orders yet. You can create a order by clicking the + button below.
         </EmptyContent>
       )}
-    </div>
+    </DashboardLayout>
   );
 };
 

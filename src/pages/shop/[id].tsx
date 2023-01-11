@@ -2,6 +2,7 @@ import React from "react";
 import { prisma } from "../../server/db/client";
 import type { IProduct, ICategory } from "../../types";
 import ProductForm from "../../components/form/ProductForm";
+import DashboardLayout from "../../components/layout/DashboradLayout";
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
   // Get the current product from the database use prisma
@@ -64,12 +65,14 @@ const List = ({
 }) => {
   if (!product) return null;
   return (
-    <ProductForm
-      product={product}
-      categories={categories}
-      codes={codes}
-      operation="update"
-    />
+    <DashboardLayout>
+      <ProductForm
+        product={product}
+        categories={categories}
+        codes={codes}
+        operation="update"
+      />
+    </DashboardLayout>
   );
 };
 

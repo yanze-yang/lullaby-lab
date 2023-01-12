@@ -9,6 +9,7 @@ export type IProduct = Product & {
 };
 
 export type IOrder = Order & {
+  contact: Contact;
   products: Product[];
 };
 

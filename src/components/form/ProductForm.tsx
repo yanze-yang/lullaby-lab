@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../layout/Navbar";
 import axios from "axios";
 import { useRouter } from "next/router";
 import type { IProduct, ICategory } from "../../types";

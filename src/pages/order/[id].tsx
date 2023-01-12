@@ -1,6 +1,6 @@
 import React from "react";
 import { prisma } from "../../server/db/client";
-import type { IProduct, IOrder } from "../../types";
+import type { IProduct, IOrder, IContact } from "../../types";
 import { getSession } from "next-auth/react";
 import OrderForm from "../../components/form/OrderForm";
 
@@ -10,6 +10,7 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
     where: { id: params.id },
     include: {
       products: true,
+      contact: true,
     },
   });
 
@@ -17,11 +18,17 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
     where: { userId: session?.user?.id },
   });
 
+  const contacts = await prisma.contact.findMany({
+    where: { userId: session?.user?.id },
+    select: { id: true, name: true },
+  });
+
   if (order) {
     return {
       props: {
         order: JSON.parse(JSON.stringify(order)),
         products: JSON.parse(JSON.stringify(products)),
+        contacts: JSON.parse(JSON.stringify(contacts)),
       },
     };
   }
@@ -50,12 +57,21 @@ export async function getStaticPaths() {
 const EditOrder = ({
   order,
   products,
+  contacts,
 }: {
   order: IOrder;
   products: IProduct[];
+  contacts: IContact[];
 }) => {
   if (!order) return null;
-  return <OrderForm order={order} products={products} operation="update" />;
+  return (
+    <OrderForm
+      order={order}
+      products={products}
+      contacts={contacts}
+      operation="update"
+    />
+  );
 };
 
 export default EditOrder;

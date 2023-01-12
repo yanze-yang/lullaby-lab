@@ -1,9 +1,11 @@
 import React from "react";
 import { prisma } from "../../server/db/client";
 import type { IProduct, IOrder } from "../../types";
+import { getSession } from "next-auth/react";
 import OrderForm from "../../components/form/OrderForm";
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
+  const session = await getSession();
   const order = await prisma.order.findUnique({
     where: { id: params.id },
     include: {
@@ -11,7 +13,9 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
     },
   });
 
-  const products = await prisma.product.findMany();
+  const products = await prisma.product.findMany({
+    where: { userId: session?.user?.id },
+  });
 
   if (order) {
     return {

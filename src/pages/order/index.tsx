@@ -5,9 +5,23 @@ import EmptyContent from "../../components/layout/EmptyContent";
 import OrderTable from "../../components/order/OrderTable";
 import { prisma } from "../../server/db/client";
 import type { IOrder } from "../../types";
+import type { GetSessionParams } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: GetSessionParams) {
+  // Check if user is authenticated
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   const orders = await prisma.order.findMany({
+    where: { userId: session.user?.id },
     include: {
       products: true,
     },

@@ -6,9 +6,22 @@ import EmptyContent from "../../components/layout/EmptyContent";
 import ContactTable from "../../components/contanct/ContactTable";
 import DashboardLayout from "../../components/layout/DashboradLayout";
 import CreateButton from "../../components/button/CreateButton";
+import type { GetSessionParams } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
-export async function getServerSideProps() {
-  const contacts = await prisma.contact.findMany();
+export async function getServerSideProps(context: GetSessionParams) {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  const contacts = await prisma.contact.findMany({
+    where: { userId: session.user?.id },
+  });
 
   // sort by created_at
   contacts.sort((a, b) => {

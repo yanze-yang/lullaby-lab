@@ -5,7 +5,9 @@ import { useRouter } from "next/router";
 import type { IContact } from "../../types";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 import { InputStyle, LabelStyle } from "./FormStyle";
+import type { Prisma } from "@prisma/client";
 
 type Props = {
   contact?: IContact;
@@ -13,6 +15,8 @@ type Props = {
 };
 
 const ContactForm = ({ contact, operation }: Props) => {
+  const { data: session } = useSession();
+
   type FormValues = {
     name: string;
     wechat: string;
@@ -43,9 +47,14 @@ const ContactForm = ({ contact, operation }: Props) => {
   };
 
   const onSubmit = (data: FormValues) => {
+    if (!session) {
+      return;
+    }
+
     if (operation === "update" && contact) {
+      const updateData: Prisma.ContactUncheckedUpdateInput = { ...data };
       const update = axios
-        .patch(`/api/contacts/${contact.id}`, data)
+        .patch(`/api/contacts/${contact.id}`, updateData)
         .then(() => {
           redirect();
         });
@@ -55,7 +64,11 @@ const ContactForm = ({ contact, operation }: Props) => {
         error: "Error updating contact",
       });
     } else {
-      const create = axios.post(`/api/contacts`, data).then(() => {
+      const createData: Prisma.ContactUncheckedCreateInput = {
+        ...data,
+        userId: session?.user?.id as string,
+      };
+      const create = axios.post(`/api/contacts`, createData).then(() => {
         redirect();
       });
       toast.promise(create, {

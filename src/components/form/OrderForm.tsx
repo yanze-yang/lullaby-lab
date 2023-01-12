@@ -10,6 +10,7 @@ import ReactSelect from "react-select";
 
 import { InputStyle, LabelStyle } from "./FormStyle";
 import moment from "moment";
+import { useSession } from "next-auth/react";
 import type { Prisma } from "@prisma/client";
 
 interface IProductOption {
@@ -24,6 +25,7 @@ type Props = {
 };
 
 const OrderForm = ({ order, products, operation }: Props) => {
+  const { data: session } = useSession();
   const productsOptions: IProductOption[] = products?.map((product) => {
     return {
       value: product.id,
@@ -70,6 +72,10 @@ const OrderForm = ({ order, products, operation }: Props) => {
   };
 
   const onSubmit = (data: FormValues) => {
+    if (!session) {
+      return;
+    }
+
     if (operation === "update" && order) {
       const updateData: Prisma.OrderUncheckedUpdateInput = {
         date: moment(data.date).format(),
@@ -106,6 +112,7 @@ const OrderForm = ({ order, products, operation }: Props) => {
             };
           }),
         },
+        userId: session.user?.id as string,
       };
 
       const create = axios.post(`/api/orders`, newOrder).then(() => {

@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../layout/Navbar";
 import axios from "axios";
 import { useRouter } from "next/router";
-import type { IProduct, IOrder } from "../../types";
+import type { IProduct, IOrder, IContact } from "../../types";
 import toast from "react-hot-toast";
 import { useForm, Controller } from "react-hook-form";
 
@@ -18,13 +18,19 @@ interface IProductOption {
   label: string;
 }
 
+interface IContactOption {
+  value: string;
+  label: string;
+}
+
 type Props = {
   order?: IOrder;
   products: IProduct[];
+  contacts: IContact[];
   operation: "create" | "update";
 };
 
-const OrderForm = ({ order, products, operation }: Props) => {
+const OrderForm = ({ order, products, contacts = [], operation }: Props) => {
   const { data: session } = useSession();
   const productsOptions: IProductOption[] = products?.map((product) => {
     return {
@@ -32,13 +38,6 @@ const OrderForm = ({ order, products, operation }: Props) => {
       label: product.name,
     };
   });
-
-  type FormValues = {
-    date: string;
-    notes: string;
-    addon: string;
-    products: IProductOption[];
-  };
 
   const defaultProductsOptions: IProductOption[] | undefined =
     order?.products?.map((product) => {
@@ -48,11 +47,32 @@ const OrderForm = ({ order, products, operation }: Props) => {
       };
     });
 
+  const contactOptions: IContactOption[] = contacts?.map((contact) => {
+    return {
+      value: contact.id,
+      label: contact.name as string,
+    };
+  });
+
+  const defaultContactOptions: IContactOption | undefined = {
+    value: order?.contact?.id as string,
+    label: order?.contact?.name as string,
+  };
+
+  type FormValues = {
+    date: string;
+    notes: string;
+    addon: string;
+    products: IProductOption[];
+    contactId: IContactOption;
+  };
+
   const defaultValues: FormValues = {
     date: moment().format("YYYY-MM-DD"),
     notes: order?.notes || "",
     addon: order?.addon?.toString() || "",
     products: defaultProductsOptions || [],
+    contactId: defaultContactOptions || "",
   };
 
   const {
@@ -203,6 +223,25 @@ const OrderForm = ({ order, products, operation }: Props) => {
                   />
                 )}
                 name="products"
+                control={control}
+              />
+            </div>
+            {/* Contacts field */}
+            <div>
+              <label htmlFor={"contactId"} className={LabelStyle}>
+                Contact
+              </label>
+              <Controller
+                render={({ field }) => (
+                  <ReactSelect
+                    id="selectbox"
+                    instanceId="selectbox"
+                    {...field}
+                    options={contactOptions}
+                    classNamePrefix="select"
+                  />
+                )}
+                name="contactId"
                 control={control}
               />
             </div>

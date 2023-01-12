@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { InputStyle, LabelStyle } from "./FormStyle";
 import type { Prisma } from "@prisma/client";
+import { getSession } from "next-auth/react";
 
 type Props = {
   product?: IProduct;
@@ -35,7 +36,7 @@ const ProductForm = ({ product, categories, codes, operation }: Props) => {
     price: product?.price.toString() || "",
     description: product?.description || "",
     image: product?.image || "",
-    categoryId: product?.category.id || categories[0]?.id || "",
+    categoryId: product?.category?.id || categories[0]?.id || "",
   };
 
   const {
@@ -53,15 +54,19 @@ const ProductForm = ({ product, categories, codes, operation }: Props) => {
     }, 1000);
   };
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
+    const session = await getSession();
+    if (!session || !session.user) return;
+
     if (operation === "update" && product) {
-      const DATA: Prisma.ProductUncheckedUpdateInput = {
+      const updateProductData: Prisma.ProductUncheckedUpdateInput = {
         ...data,
+        categoryId: data.categoryId === "" ? null : data.categoryId,
         price: Number(data.price),
       };
 
       const update = axios
-        .patch(`/api/products/${product.id}`, DATA)
+        .patch(`/api/products/${product.id}`, updateProductData)
         .then(() => {
           redirect();
         });
@@ -74,9 +79,12 @@ const ProductForm = ({ product, categories, codes, operation }: Props) => {
       // if has response, redirect
     } else {
       // Convert price to number
+
       const product: Prisma.ProductUncheckedCreateInput = {
         ...data,
+        categoryId: data.categoryId === "" ? null : data.categoryId,
         price: Number(data.price),
+        userId: session?.user?.id,
       };
 
       const create = axios.post(`/api/products`, product).then(() => {

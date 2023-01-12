@@ -58,21 +58,21 @@ const products = [
 ];
 
 async function main() {
-  await prisma.category.upsert({
-    where: { id: "f139448d-2679-4848-8ede-71c97ef1ab8a" },
-    update: {
-      name: "Cake",
-      products: {
-        create: products,
-      },
-    },
-    create: {
-      name: "Cake",
-      products: {
-        create: products,
-      },
-    },
-  });
+  // await prisma.category.upsert({
+  //   where: { id: "f139448d-2679-4848-8ede-71c97ef1ab8a" },
+  //   update: {
+  //     name: "Cake",
+  //     products: {
+  //       create: products,
+  //     },
+  //   },
+  //   create: {
+  //     name: "Cake",
+  //     products: {
+  //       create: products,
+  //     },
+  //   },
+  // });
 }
 main()
   .then(async () => {

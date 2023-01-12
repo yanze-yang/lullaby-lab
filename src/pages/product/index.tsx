@@ -14,24 +14,17 @@ export async function getServerSideProps(context: GetSessionParams) {
   const session = await getSession(context);
   console.log("session", session);
   // If not, redirect to the homepage
-
-  let products = [];
   if (!session) {
-    products = await prisma.product.findMany({
-      include: {
-        category: true,
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
       },
-    });
-    // return {
-    //   redirect: {
-    //     destination: "/",
-    //     permanent: false,
-    //   },
-    // };
+    };
   }
 
-  products = await prisma.product.findMany({
-    where: { userId: session?.user?.id },
+  const products = await prisma.product.findMany({
+    where: { userId: session.user?.id },
     include: {
       category: true,
     },

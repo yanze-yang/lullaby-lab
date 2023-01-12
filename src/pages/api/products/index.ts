@@ -3,7 +3,6 @@ import { type NextApiRequest, type NextApiResponse } from "next";
 import { prisma } from "../../../server/db/client";
 
 const products = async (req: NextApiRequest, res: NextApiResponse) => {
-  // Update product
   if (req.method === "POST") {
     try {
       const product = await prisma.product.create({

@@ -82,8 +82,8 @@ model Product {
   category    Category? @relation(fields: [categoryId], references: [id])
   categoryId  String?
   orders      Order[]
-  user        User?     @relation(fields: [userId], references: [id])
-  userId      String?
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
 }
 
 model Category {
@@ -92,8 +92,8 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   products  Product[]
-  user      User?     @relation(fields: [userId], references: [id])
-  userId    String?
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
 }
 
 model Contact {
@@ -107,8 +107,8 @@ model Contact {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   orders    Order[]
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    String?
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
 }
 
 model Order {
@@ -121,6 +121,6 @@ model Order {
   contact   Contact?  @relation(fields: [contactId], references: [id])
   contactId String?
   products  Product[]
-  user      User?     @relation(fields: [userId], references: [id])
-  userId    String?
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
 }

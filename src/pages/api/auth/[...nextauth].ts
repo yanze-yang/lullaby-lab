@@ -31,9 +31,9 @@ export const authOptions: NextAuthOptions = {
     }),
     // ...add more providers here
   ],
-  pages: {
-    signIn: "/signin",
-  },
+  // pages: {
+  //   signIn: "/signin",
+  // },
 };
 
 export default NextAuth(authOptions);

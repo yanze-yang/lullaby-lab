@@ -3,8 +3,10 @@ import { prisma } from "../../server/db/client";
 import type { IProduct, ICategory } from "../../types";
 import ProductForm from "../../components/form/ProductForm";
 import DashboardLayout from "../../components/layout/DashboradLayout";
+import { getSession } from "next-auth/react";
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
+  const session = await getSession();
   // Get the current product from the database use prisma
   const product = await prisma.product.findUnique({
     where: { id: params.id },
@@ -15,11 +17,13 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
 
   // get all the codes from the products and put them in an array
   const productsWithCode = await prisma.product.findMany({
+    where: { userId: session?.user?.id },
     select: { code: true },
   });
   const codes = productsWithCode.map((product) => product.code);
 
   const categories = await prisma.category.findMany({
+    where: { userId: session?.user?.id },
     select: { id: true, name: true },
   });
 

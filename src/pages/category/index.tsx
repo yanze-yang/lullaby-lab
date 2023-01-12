@@ -5,9 +5,24 @@ import DashboardLayout from "../../components/layout/DashboradLayout";
 import EmptyContent from "../../components/layout/EmptyContent";
 import { prisma } from "../../server/db/client";
 import type { ICategory } from "../../types";
+import type { GetSessionParams } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
-export async function getServerSideProps() {
-  const categories = await prisma.category.findMany();
+export async function getServerSideProps(context: GetSessionParams) {
+  // Check if user is authenticated
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  const categories = await prisma.category.findMany({
+    where: { userId: session.user?.id },
+  });
 
   // sort by created_at
   categories.sort((a, b) => {

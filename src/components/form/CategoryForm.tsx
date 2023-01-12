@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { InputStyle, LabelStyle } from "./FormStyle";
 
 import type { Prisma } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 type Props = {
   category?: ICategory;
@@ -16,6 +17,8 @@ type Props = {
 };
 
 const CategoryForm = ({ category, operation }: Props) => {
+  const { data: session } = useSession();
+
   type FormValues = {
     name: string;
   };
@@ -41,6 +44,10 @@ const CategoryForm = ({ category, operation }: Props) => {
   };
 
   const onSubmit = (data: FormValues) => {
+    if (!session) {
+      return;
+    }
+
     if (operation === "update" && category) {
       const updateData: Prisma.CategoryUncheckedUpdateInput = {
         name: data.name,
@@ -59,6 +66,7 @@ const CategoryForm = ({ category, operation }: Props) => {
     } else {
       const createDate: Prisma.CategoryUncheckedUpdateInput = {
         name: data.name,
+        userId: session.user?.id,
       };
 
       const create = axios.post(`/api/categories`, createDate).then(() => {

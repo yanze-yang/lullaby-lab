@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+import { contactData } from "./contactData";
+import { cakeData } from "./cakeData";
 
 const products = [
   {
@@ -57,7 +59,40 @@ const products = [
   // },
 ];
 
+const DATA = contactData.map((contact) => {
+  return {
+    name: contact.Name as string,
+    email: contact.Address as string,
+    // phone: contact.Phone as number,
+    notes: contact.Notes as string,
+    userId: "clcsdnacz0000tixorx5y1zqj",
+  };
+});
+
+const cakeDATA = cakeData.map((cake) => {
+  return {
+    name: cake.Name as string,
+    size: cake.Size as string,
+    code: cake.Code as string,
+    price: cake.Numbers as number,
+    description: cake.Notes as string,
+    image: "https://via.placeholder.com/150",
+    categoryId: cake.categoryId as string,
+    userId: "clcsdnacz0000tixorx5y1zqj",
+  };
+});
+
 async function main() {
+  console.log("DATA", DATA);
+
+  // await prisma.contact.createMany({
+  //   data: DATA,
+  // });
+
+  await prisma.product.createMany({
+    data: cakeDATA,
+  });
+
   // await prisma.category.upsert({
   //   where: { id: "f139448d-2679-4848-8ede-71c97ef1ab8a" },
   //   update: {

@@ -37,6 +37,7 @@ type Props = {
 };
 
 const DashboardLayout: React.FC<Props> = ({ children }: Props) => {
+  const [collapsed, setCollapsed] = React.useState(false);
   const router = useRouter();
   const path = router.pathname;
 
@@ -57,7 +58,7 @@ const DashboardLayout: React.FC<Props> = ({ children }: Props) => {
   };
 
   return (
-    <Layout style={{ height: "100vh" }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <Navbar />
       {/* <Header className="header">
         <div className="logo" />
@@ -69,7 +70,13 @@ const DashboardLayout: React.FC<Props> = ({ children }: Props) => {
         />
       </Header> */}
       <Layout style={{ backgroundColor: "#111827" }}>
-        <Sider width={200} style={{ background: colorBgContainer }}>
+        <Sider
+          width={200}
+          style={{ background: colorBgContainer }}
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+        >
           <Menu
             theme="dark"
             mode="inline"

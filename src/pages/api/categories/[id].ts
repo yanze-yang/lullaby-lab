@@ -1,7 +1,13 @@
 import { prisma } from "../../../server/db/client";
 import { type NextApiRequest, type NextApiResponse } from "next";
+import { getSession } from "next-auth/react";
 
 const order = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getSession({ req });
+  if (!session) {
+    return res.status(401).json({ message: "Unauthorized." });
+  }
+
   const { id } = req.query;
   // narrows the type of id to string
   if (typeof id !== "string")

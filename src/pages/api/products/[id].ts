@@ -7,6 +7,7 @@ const product = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!session) {
     return res.status(401).json({ message: "Unauthorized." });
   }
+
   const { id } = req.query;
   // narrows the type of id to string
   if (typeof id !== "string")
@@ -33,7 +34,6 @@ const product = async (req: NextApiRequest, res: NextApiResponse) => {
         where: { id },
         data: {
           ...req.body,
-          userId: session?.user?.id,
         },
       });
       return res.status(200).json(product);

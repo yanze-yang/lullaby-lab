@@ -1,12 +1,20 @@
-import type { Prisma } from "@prisma/client";
+import { getSession } from "next-auth/react";
 import { type NextApiRequest, type NextApiResponse } from "next";
 
 import { prisma } from "../../../server/db/client";
 
 const categories = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getSession({ req });
+  if (!session) {
+    return res.status(401).json({ message: "Unauthorized." });
+  }
+
   if (req.method === "GET") {
     try {
       const categories = await prisma.category.findMany({
+        where: {
+          userId: session?.user?.id,
+        },
         include: {
           products: true,
         },
@@ -18,7 +26,7 @@ const categories = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === "POST") {
-    const data: Prisma.CategoryCreateInput = req.body;
+    const data = req.body;
 
     try {
       const category = await prisma.category.create({

@@ -3,7 +3,7 @@
 <img
   src="public/logo.png"
   alt="logo"
-  style="display: block; margin: 0 auto; max-width: 300px">
+  style="display: block; margin: 0 auto; max-width: 200px">
 
 **[Lullaby Lab](https://supa-woad.vercel.app)** is a simple and fast web app used to manage orders and clients of Lullaby Cake Studio.
 

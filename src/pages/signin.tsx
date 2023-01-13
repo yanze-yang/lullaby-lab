@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 
-const signin = () => {
+const Signin = () => {
   return (
     // tailwind line height example
     // https://tailwindcss.com/docs/line-height
@@ -61,4 +61,4 @@ const signin = () => {
   );
 };
 
-export default signin;
+export default Signin;

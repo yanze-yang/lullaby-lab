@@ -12,7 +12,7 @@ const signin = () => {
         <div className="mb-5 flex w-[80%] flex-row gap-2 text-sm font-medium text-gray-500 dark:text-gray-100">
           <div className="mb-5 font-sans text-5xl leading-[4rem] md:text-6xl">
             <span className=" text-blue-300 underline">Lullaby Lab,</span> a
-            simple and fast tool for managing orders and clients.
+            simple and fast web app for managing orders and clients.
           </div>
         </div>
       </div>

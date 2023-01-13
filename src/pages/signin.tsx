@@ -20,7 +20,7 @@ const signin = () => {
       <div className="relative flex items-center justify-center rounded-lg bg-white shadow dark:bg-gray-900">
         <div className="w-96 px-6 py-6 lg:px-8">
           <div className="mb-4 flex justify-center">
-            <img src="/logo.svg" alt="logo" className="h-48 w-48" />
+            <img src="/logo.png" alt="logo" className="h-48 w-48" />
           </div>
 
           <form className="space-y-6" action="#">

@@ -7,7 +7,6 @@ import DashboardLayout from "../../components/layout/DashboradLayout";
 import { getSession } from "next-auth/react";
 export async function getStaticProps() {
   const session = await getSession();
-  console.log("session", session);
 
   const categories = await prisma.category.findMany({
     where: { userId: session?.user?.id },

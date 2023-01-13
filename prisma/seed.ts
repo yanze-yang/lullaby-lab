@@ -83,8 +83,6 @@ const cakeDATA = cakeData.map((cake) => {
 });
 
 async function main() {
-  console.log("DATA", DATA);
-
   // await prisma.contact.createMany({
   //   data: DATA,
   // });

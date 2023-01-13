@@ -101,6 +101,7 @@ const OrderForm = ({ order, products, contacts = [], operation }: Props) => {
         date: moment(data.date).format(),
         notes: data.notes,
         addon: Number(data.addon),
+        contactId: data.contactId.value,
         products: {
           set: data.products.map((product) => {
             return {

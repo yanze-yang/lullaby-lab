@@ -17,6 +17,7 @@ const products = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         include: {
           products: true,
+          contact: true,
         },
       });
       return res.status(200).json(orders);

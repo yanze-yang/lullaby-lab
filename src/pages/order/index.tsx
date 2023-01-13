@@ -24,6 +24,7 @@ export async function getServerSideProps(context: GetSessionParams) {
     where: { userId: session.user?.id },
     include: {
       products: true,
+      contact: true,
     },
   });
 

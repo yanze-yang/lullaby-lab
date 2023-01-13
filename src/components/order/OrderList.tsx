@@ -62,7 +62,7 @@ export default function OrderList({ order }: Props) {
         {moment(order.date).format("dddd")},{" "}
         {moment(order.date).format("MMM DD YYYY")}
       </td>
-      <td className="py-4 px-6">{order.contactId}</td>
+      <td className="py-4 px-6">{order.contact?.name}</td>
       <td className="py-4 px-6">
         {order.products.map((product) => {
           return (
@@ -70,7 +70,7 @@ export default function OrderList({ order }: Props) {
               className="mr-2 rounded-md border-2 border-gray-600 p-1.5 text-sm text-gray-600 dark:text-gray-400"
               key={product.id}
             >
-              {product.name} | {product.size}
+              {product.name}
             </span>
           );
         })}

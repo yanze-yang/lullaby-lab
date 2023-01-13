@@ -1,9 +1,11 @@
 ## Introduction
 
-<img
-src="lullaby-lab-logo.png"
-alt="logo"
-style="display: block; margin: 0 auto; max-width: 200px; padding: 12px 48px; background-color: #2A2D3E">
+<p align="center">
+  <img
+    src="lullaby-lab-logo.png"
+    alt="logo"
+    width="350" />
+</p>
 
 **[Lullaby Lab](https://supa-woad.vercel.app)** is a simple and fast web app used to manage orders and clients of Lullaby Cake Studio.
 
@@ -19,7 +21,9 @@ style="display: block; margin: 0 auto; max-width: 200px; padding: 12px 48px; bac
 
 ## Database ERD
 
-<img
-  src="public/prisma-erd.svg"
-  alt="logo"
-  style="display: block; margin: 0 auto; max-width: 300px">
+
+<p align="center">
+  <img
+    src="public/prisma-erd.svg"
+    width="400" />
+</p>

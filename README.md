@@ -1,7 +1,7 @@
 ## Introduction
 
 <img
-src="public/logo.png"
+src="lullaby-lab-logo.png"
 alt="logo"
 style="display: block; margin: 0 auto; max-width: 200px; padding: 12px 48px; background-color: #2A2D3E">
 

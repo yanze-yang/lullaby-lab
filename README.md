@@ -29,10 +29,9 @@
 
 ## TODO
 
-- [ ] Build the Dashboard Chart with Chart.js (replace Antd Chart) | Jan 31
-
-- [x] use Next.js Auth | Dec 31
-- [x] Migrate existing data from the CSV file | Dec 31
-- [x] new Dashboard layout | Dec 31
-- [x] Use Tailwind CSS to replace vanilla CSS | Nov 31
-- [x] Redesign the Order Database Entity | Nov 31
+- [ ] Build the Dashboard Chart with Chart.js (replace Antd Chart)
+- [x] use Next.js Auth
+- [x] Migrate existing data from the CSV file
+- [x] new Dashboard layout
+- [x] Use Tailwind CSS to replace vanilla CSS
+- [x] Redesign the Order Database Entity

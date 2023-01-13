@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className="container mx-auto flex flex-wrap items-center justify-between">
           <Link href="/dashboard" className="flex items-center">
             <img
-              src="/logo.png"
+              src="/logo.svg"
               className="mr-6 h-6 sm:h-9"
               alt="Flowbite Logo"
             />

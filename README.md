@@ -1,7 +1,7 @@
 ## Introduction
 
 <img
-  src="public/logo.png"
+  src="public/logo.svg"
   alt="logo"
   style="display: block; margin: 0 auto; max-width: 300px">
 

@@ -30,19 +30,15 @@ export default function Dashboard() {
         <Row>
           <Col span={24}>{<Demo />}</Col>
         </Row>
-        <Row>
+        {/* <Row>
           <Col span={12}>col-12</Col>
           <Col span={12}>col-12</Col>
-        </Row>
-        <Row>
+        </Row> */}
+        {/* <Row>
           <Col span={8}></Col>
           <Col span={8}>col-8</Col>
           <Col span={8}>col-8</Col>
-        </Row>
-        <Row gutter={24}>
-          <Col span={6}>{/* <DemoRingProgress /> */}</Col>
-          <Col span={18}>{/* <DemoColumn /> */}</Col>
-        </Row>
+        </Row> */}
       </>
     </DashboardLayout>
   );

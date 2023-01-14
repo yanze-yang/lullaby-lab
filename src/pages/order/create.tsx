@@ -6,16 +6,33 @@ import { getSession } from "next-auth/react";
 
 export async function getStaticProps() {
   const session = await getSession();
-  const products = await prisma.product.findMany({
-    where: { userId: session?.user?.id },
-  });
+  let products = [];
 
-  const contacts = await prisma.contact.findMany({
-    where: { userId: session?.user?.id },
-    select: { id: true, name: true },
-  });
+  if (session) {
+    products = await prisma.product.findMany({
+      where: { userId: session?.user?.id },
+    });
+  } else {
+    products = await prisma.product.findMany({
+      where: { userId: "clcsa1guq000008mo3tdn1r0e" },
+    });
+  }
 
-  if (products) {
+  let contacts = [];
+
+  if (session) {
+    contacts = await prisma.contact.findMany({
+      where: { userId: session?.user?.id },
+      select: { id: true, name: true },
+    });
+  } else {
+    contacts = await prisma.contact.findMany({
+      where: { userId: "clcsa1guq000008mo3tdn1r0e" },
+      select: { id: true, name: true },
+    });
+  }
+
+  if (products && contacts) {
     return {
       props: {
         products: JSON.parse(JSON.stringify(products)),

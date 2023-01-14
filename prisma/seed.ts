@@ -61,11 +61,10 @@ const products = [
 
 const DATA = contactData.map((contact) => {
   return {
-    name: contact.Name as string,
-    email: contact.Address as string,
+    name: contact.name,
+    address: contact.address as string,
     // phone: contact.Phone as number,
-    notes: contact.Notes as string,
-    userId: "clcsdnacz0000tixorx5y1zqj",
+    userId: "clcsa1guq000008mo3tdn1r0e",
   };
 });
 
@@ -83,13 +82,13 @@ const cakeDATA = cakeData.map((cake) => {
 });
 
 async function main() {
-  // await prisma.contact.createMany({
-  //   data: DATA,
-  // });
-
-  await prisma.product.createMany({
-    data: cakeDATA,
+  await prisma.contact.createMany({
+    data: DATA,
   });
+
+  // await prisma.product.createMany({
+  //   data: cakeDATA,
+  // });
 
   // await prisma.category.upsert({
   //   where: { id: "f139448d-2679-4848-8ede-71c97ef1ab8a" },

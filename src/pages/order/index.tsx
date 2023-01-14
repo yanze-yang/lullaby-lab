@@ -11,22 +11,33 @@ import { getSession } from "next-auth/react";
 export async function getServerSideProps(context: GetSessionParams) {
   // Check if user is authenticated
   const session = await getSession(context);
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
-  const orders = await prisma.order.findMany({
-    where: { userId: session.user?.id },
-    include: {
-      products: true,
-      contact: true,
-    },
-  });
+  let orders = [];
+  if (session) {
+    orders = await prisma.order.findMany({
+      where: { userId: session?.user?.id },
+      include: {
+        contact: true,
+        products: true,
+      },
+    });
+  } else {
+    orders = await prisma.order.findMany({
+      where: { userId: "clcsa1guq000008mo3tdn1r0e" },
+      include: {
+        contact: true,
+        products: true,
+      },
+    });
+  }
 
   // sort by created_at
   orders.sort((a, b) => {

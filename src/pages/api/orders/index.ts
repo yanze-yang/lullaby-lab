@@ -5,9 +5,9 @@ import { prisma } from "../../../server/db/client";
 
 const products = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
-  if (!session) {
-    return res.status(401).json({ message: "Unauthorized." });
-  }
+  // if (!session) {
+  //   return res.status(401).json({ message: "Unauthorized." });
+  // }
 
   if (req.method === "GET") {
     try {

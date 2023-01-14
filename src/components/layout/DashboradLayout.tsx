@@ -10,6 +10,7 @@ import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
 import Navbar from "./Navbar";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 const { Content, Sider } = Layout;
 
@@ -37,17 +38,28 @@ type Props = {
 };
 
 const DashboardLayout: React.FC<Props> = ({ children }: Props) => {
+  const { data: session } = useSession();
   const [collapsed, setCollapsed] = React.useState(false);
   const router = useRouter();
   const path = router.pathname;
 
-  const items: MenuItem[] = [
-    getItem("Dashboard", "/dashboard", <FundOutlined />),
-    getItem("Order", "/order", <SnippetsOutlined />),
-    getItem("Product", "/product", <ShopOutlined />),
-    getItem("Category", "/category", <LinkOutlined />),
-    getItem("Contact", "/contact", <UserSwitchOutlined />),
-  ];
+  let items: MenuItem[] = [];
+
+  if (session) {
+    items = [
+      getItem("Dashboard", "/dashboard", <FundOutlined />),
+      getItem("Order", "/order", <SnippetsOutlined />),
+      getItem("Product", "/product", <ShopOutlined />),
+      getItem("Category", "/category", <LinkOutlined />),
+      getItem("Contact", "/contact", <UserSwitchOutlined />),
+    ];
+  } else {
+    items = [
+      getItem("Dashboard", "/dashboard", <FundOutlined />),
+      getItem("Order", "/order", <SnippetsOutlined />),
+    ];
+  }
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();

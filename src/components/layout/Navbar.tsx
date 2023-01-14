@@ -3,12 +3,15 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { Sriracha } from "@next/font/google";
+import { useSession } from "next-auth/react";
 const caveat = Sriracha({
   subsets: ["latin"],
   weight: "400",
 });
 
 const Navbar = () => {
+  const { data: session } = useSession();
+
   const githubStyle =
     "block rounded py-2 pl-3 pr-4 text-blue-700 hover:bg-gray-100 dark:border-gray-700 dark:text-blue-300 dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white";
 
@@ -82,36 +85,46 @@ const Navbar = () => {
                   Order
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/product"
-                  className={
-                    pathname === "/product" ? isActiveStyle : isNotActiveStyle
-                  }
-                >
-                  Product
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/category"
-                  className={
-                    pathname === "/category" ? isActiveStyle : isNotActiveStyle
-                  }
-                >
-                  Category
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className={
-                    pathname === "/contact" ? isActiveStyle : isNotActiveStyle
-                  }
-                >
-                  Contact
-                </Link>
-              </li>
+              {session && (
+                <>
+                  <li>
+                    <Link
+                      href="/product"
+                      className={
+                        pathname === "/product"
+                          ? isActiveStyle
+                          : isNotActiveStyle
+                      }
+                    >
+                      Product
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/category"
+                      className={
+                        pathname === "/category"
+                          ? isActiveStyle
+                          : isNotActiveStyle
+                      }
+                    >
+                      Category
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/contact"
+                      className={
+                        pathname === "/contact"
+                          ? isActiveStyle
+                          : isNotActiveStyle
+                      }
+                    >
+                      Contact
+                    </Link>
+                  </li>
+                </>
+              )}
               <li>
                 <Link
                   href="https://github.com/yanze-yang/lab"

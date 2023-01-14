@@ -93,57 +93,124 @@ const OrderForm = ({ order, products, contacts = [], operation }: Props) => {
 
   const onSubmit = (data: FormValues) => {
     if (!session) {
-      return;
-    }
+      if (operation === "update" && order) {
+        const updateData: Prisma.OrderUncheckedUpdateInput = {
+          date: moment(data.date).format(),
+          notes: data.notes,
+          addon: Number(data.addon),
+          contactId: data.contactId.value,
+          products: {
+            set: data.products.map((product) => {
+              return {
+                id: product.value,
+              };
+            }),
+          },
+          userId: "clcsa1guq000008mo3tdn1r0e",
+        };
+        const update = axios
+          .patch(`/api/orders/${order.id}`, updateData)
+          .then(() => {
+            redirect();
+          });
 
-    if (operation === "update" && order) {
-      const updateData: Prisma.OrderUncheckedUpdateInput = {
-        date: moment(data.date).format(),
-        notes: data.notes,
-        addon: Number(data.addon),
-        contactId: data.contactId.value,
-        products: {
-          set: data.products.map((product) => {
-            return {
-              id: product.value,
-            };
-          }),
-        },
-      };
-      const update = axios
-        .patch(`/api/orders/${order.id}`, updateData)
-        .then(() => {
+        toast.promise(
+          update,
+          {
+            loading: "Loading",
+            success: "Order updated",
+            error: "Error updating order",
+          },
+          { id: "update" }
+        );
+      } else {
+        const newOrder: Prisma.OrderUncheckedCreateInput = {
+          date: moment(data.date).format(),
+          notes: data.notes,
+          addon: Number(data.addon),
+          products: {
+            connect: data.products.map((product) => {
+              return {
+                id: product.value,
+              };
+            }),
+          },
+          userId: "clcsa1guq000008mo3tdn1r0e",
+        };
+
+        const create = axios.post(`/api/orders`, newOrder).then(() => {
           redirect();
         });
+        toast.promise(
+          create,
+          {
+            loading: "Loading",
+            success: "Order created",
+            error: "Error creating order",
+          },
+          { id: "create" }
+        );
+      }
+    }
 
-      toast.promise(update, {
-        loading: "Loading",
-        success: "Order updated",
-        error: "Error updating order",
-      });
-    } else {
-      const newOrder: Prisma.OrderUncheckedCreateInput = {
-        date: moment(data.date).format(),
-        notes: data.notes,
-        addon: Number(data.addon),
-        products: {
-          connect: data.products.map((product) => {
-            return {
-              id: product.value,
-            };
-          }),
-        },
-        userId: session.user?.id as string,
-      };
+    if (session) {
+      if (operation === "update" && order) {
+        const updateData: Prisma.OrderUncheckedUpdateInput = {
+          date: moment(data.date).format(),
+          notes: data.notes,
+          addon: Number(data.addon),
+          contactId: data.contactId.value,
+          products: {
+            set: data.products.map((product) => {
+              return {
+                id: product.value,
+              };
+            }),
+          },
+        };
+        const update = axios
+          .patch(`/api/orders/${order.id}`, updateData)
+          .then(() => {
+            redirect();
+          });
 
-      const create = axios.post(`/api/orders`, newOrder).then(() => {
-        redirect();
-      });
-      toast.promise(create, {
-        loading: "Loading",
-        success: "Order created",
-        error: "Error creating order",
-      });
+        toast.promise(
+          update,
+          {
+            loading: "Loading",
+            success: "Order updated",
+            error: "Error updating order",
+          },
+          { id: "update" }
+        );
+      } else {
+        const newOrder: Prisma.OrderUncheckedCreateInput = {
+          date: moment(data.date).format(),
+          notes: data.notes,
+          addon: Number(data.addon),
+          products: {
+            connect: data.products.map((product) => {
+              return {
+                id: product.value,
+              };
+            }),
+          },
+          userId: session?.user?.id as string,
+        };
+
+        const create = axios.post(`/api/orders`, newOrder).then(() => {
+          redirect();
+        });
+        toast.promise(
+          create,
+          {
+            loading: "Loading",
+            success: "Order created",
+            error: "Error creating order",
+          },
+          { id: "create" }
+        );
+      }
     }
   };
   return (

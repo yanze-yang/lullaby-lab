@@ -6,6 +6,7 @@ import React from "react";
 import { useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const [hidden, setHidden] = React.useState(false);
   const { data: session } = useSession();
 
   const githubStyle =
@@ -34,6 +35,7 @@ const Navbar = () => {
           </Link>
           <div className="flex md:order-2">
             <button
+              onClick={() => setHidden(!hidden)}
               data-collapse-toggle="navbar-sticky"
               type="button"
               className="inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
@@ -57,7 +59,9 @@ const Navbar = () => {
             </button>
           </div>
           <div
-            className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"
+            className={`${
+              !hidden && "hidden"
+            } w-full items-center justify-between md:order-1 md:flex md:w-auto`}
             id="navbar-sticky"
           >
             <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:text-sm md:font-medium md:dark:bg-gray-900">

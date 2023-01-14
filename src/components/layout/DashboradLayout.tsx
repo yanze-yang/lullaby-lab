@@ -40,6 +40,21 @@ type Props = {
 const DashboardLayout: React.FC<Props> = ({ children }: Props) => {
   const { data: session } = useSession();
   const [collapsed, setCollapsed] = React.useState(false);
+
+  // when screen is small, the sider will be collapsed
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setCollapsed(true);
+      } else {
+        setCollapsed(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const router = useRouter();
   const path = router.pathname;
 

@@ -22,6 +22,7 @@ ChartJS.register(
 
 export const options = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       position: "top" as const,
@@ -54,7 +55,9 @@ export const data = {
 export default function Demo() {
   return (
     // <ChartWrapper title="Order">
-    <Bar options={options} data={data} />
+    <div className="relative h-[50vh] w-full">
+      <Bar options={options} data={data} />
+    </div>
     // </ChartWrapper>
   );
 }

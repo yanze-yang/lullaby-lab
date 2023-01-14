@@ -1,24 +1,27 @@
 import React from "react";
 import { prisma } from "../../server/db/client";
 import type { IProduct, IOrder, IContact } from "../../types";
-import { getSession } from "next-auth/react";
+import { getSession, GetSessionParams, useSession } from "next-auth/react";
 import OrderForm from "../../components/form/OrderForm";
+import type { GetServerSidePropsContext } from "next/types";
+import { GetServerSideProps } from "next/types";
 
-export async function getStaticProps({ params }: { params: { id: string } }) {
-  const session = await getSession();
-  let order: any = [];
-  let products = [];
-  let contacts = [];
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getSession(context);
+  const { params } = context;
+
+  let products: any;
+  let contacts: any;
+
+  const order = await prisma.order.findUnique({
+    where: { id: params?.id as string },
+    include: {
+      products: true,
+      contact: true,
+    },
+  });
 
   if (session) {
-    order = await prisma.order.findUnique({
-      where: { id: params.id },
-      include: {
-        products: true,
-        contact: true,
-      },
-    });
-
     products = await prisma.product.findMany({
       where: { userId: session?.user?.id },
     });
@@ -28,14 +31,6 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
       select: { id: true, name: true },
     });
   } else {
-    order = await prisma.order.findUnique({
-      where: { id: params.id },
-      include: {
-        products: true,
-        contact: true,
-      },
-    });
-
     products = await prisma.product.findMany({
       where: { userId: "clcsa1guq000008mo3tdn1r0e" },
     });
@@ -46,24 +41,7 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
     });
   }
 
-  // const order = await prisma.order.findUnique({
-  //   where: { id: params.id },
-  //   include: {
-  //     products: true,
-  //     contact: true,
-  //   },
-  // });
-
-  // const products = await prisma.product.findMany({
-  //   where: { userId: session?.user?.id },
-  // });
-
-  // const contacts = await prisma.contact.findMany({
-  //   where: { userId: session?.user?.id },
-  //   select: { id: true, name: true },
-  // });
-
-  if (order) {
+  if (order && products && contacts) {
     return {
       props: {
         order: JSON.parse(JSON.stringify(order)),
@@ -81,19 +59,6 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
   };
 }
 
-export async function getStaticPaths() {
-  const orders = await prisma.order.findMany({
-    select: { id: true },
-  });
-
-  return {
-    paths: orders.map((order) => ({
-      params: { id: order.id },
-    })),
-    fallback: true,
-  };
-}
-
 const EditOrder = ({
   order,
   products,
@@ -103,7 +68,7 @@ const EditOrder = ({
   products: IProduct[];
   contacts: IContact[];
 }) => {
-  if (!order) return null;
+  // if (!order) return null;
   return (
     <OrderForm
       order={order}

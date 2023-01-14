@@ -9,14 +9,14 @@ export async function getServerSideProps(context: GetSessionParams) {
   // Check if user is authenticated
   const session = await getSession(context);
   // If not, redirect to the homepage
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/signin",
-        permanent: false,
-      },
-    };
-  }
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   return {
     props: {},

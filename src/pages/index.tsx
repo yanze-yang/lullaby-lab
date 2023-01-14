@@ -1,9 +1,12 @@
-import { getProviders, signIn } from "next-auth/react";
+import type { GetSessionParams } from "next-auth/react";
+import { getProviders, getSession, signIn } from "next-auth/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
 
 const Home = ({ providers }: { providers: AppProps }) => {
+  const router = useRouter();
   console.log("providers", providers);
   return (
     <>
@@ -59,15 +62,20 @@ const Home = ({ providers }: { providers: AppProps }) => {
                   </button>
                 </div>
               ))}
-              <Link href="/order">
-                <button
-                  type="button"
-                  className="mr-2 mb-2 inline-flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                >
-                  <div className="mr-2">👋</div>
-                  <div>Continue as Guest</div>
-                </button>
-              </Link>
+
+              <button
+                type="button"
+                className="mr-2 mb-2 inline-flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                onClick={() => {
+                  router.push("/dashboard");
+                  toast.success(` 👋 Hi, Guest. Welcome to try Lab!`, {
+                    id: "dashboard",
+                  });
+                }}
+              >
+                <div className="mr-2">👋</div>
+                <div>Continue as Guest</div>
+              </button>
             </form>
           </div>
         </div>
@@ -78,7 +86,17 @@ const Home = ({ providers }: { providers: AppProps }) => {
 
 export default Home;
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context: GetSessionParams) => {
+  const session = await getSession(context);
+  if (session) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+
   const providers = await getProviders();
   return {
     props: {

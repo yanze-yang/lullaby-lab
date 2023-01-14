@@ -2,8 +2,16 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { Sriracha } from "@next/font/google";
+const caveat = Sriracha({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 const Navbar = () => {
+  const githubStyle =
+    "block rounded py-2 pl-3 pr-4 text-blue-700 hover:bg-gray-100 dark:border-gray-700 dark:text-blue-300 dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white";
+
   const isNotActiveStyle =
     "block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white";
 
@@ -15,7 +23,7 @@ const Navbar = () => {
   const { pathname } = router;
 
   return (
-    <div>
+    <div className={caveat.className}>
       <nav className="top-0 left-0 z-20 w-full border-b border-gray-200 bg-white px-2 py-2.5 dark:border-gray-600 dark:bg-gray-900 sm:px-4">
         <div className="container mx-auto flex flex-wrap items-center justify-between">
           <Link href="/dashboard" className="flex items-center">
@@ -55,12 +63,14 @@ const Navbar = () => {
           >
             <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:text-sm md:font-medium md:dark:bg-gray-900">
               <li>
-                <a
-                  href="#"
-                  className="block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+                <Link
+                  href="/dashboard"
+                  className={
+                    pathname === "/dashboard" ? isActiveStyle : isNotActiveStyle
+                  }
                 >
                   Dashboard
-                </a>
+                </Link>
               </li>
               <li>
                 <Link
@@ -100,6 +110,14 @@ const Navbar = () => {
                   }
                 >
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://github.com/yanze-yang/lab"
+                  className={githubStyle}
+                >
+                  #Github
                 </Link>
               </li>
             </ul>

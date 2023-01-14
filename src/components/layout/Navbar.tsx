@@ -2,12 +2,8 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { Sriracha } from "@next/font/google";
+
 import { useSession } from "next-auth/react";
-const caveat = Sriracha({
-  subsets: ["latin"],
-  weight: "400",
-});
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -26,7 +22,7 @@ const Navbar = () => {
   const { pathname } = router;
 
   return (
-    <div className={caveat.className}>
+    <div>
       <nav className="top-0 left-0 z-20 w-full border-b border-gray-200 bg-white px-2 py-2.5 dark:border-gray-600 dark:bg-gray-900 sm:px-4">
         <div className="container mx-auto flex flex-wrap items-center justify-between">
           <Link href="/dashboard" className="flex items-center">

@@ -127,7 +127,7 @@ const Navbar = () => {
               )}
               <li>
                 <Link
-                  href="https://github.com/yanze-yang/lab"
+                  href="https://github.com/yanze-yang/lullaby-lab"
                   className={githubStyle}
                 >
                   #Github

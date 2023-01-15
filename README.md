@@ -7,7 +7,7 @@
     width="350" />
 </p>
 
-**[Lullaby Lab](https://supa-woad.vercel.app)** is a simple and fast web app used to manage orders and clients of Lullaby Cake Studio.
+**[Lullaby Lab](https://lullaby-lab.vercel.app/)** is a simple and fast web app used to manage orders and clients of Lullaby Cake Studio.
 
 ## The Tech Stacks
 

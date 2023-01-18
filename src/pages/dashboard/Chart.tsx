@@ -34,7 +34,14 @@ export const options = {
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+const labels = [
+  "Thai Tea Boo Boo🧋",
+  "Osmanthus Oolong🍀",
+  "Coconut Latte☕️",
+  "Spiced Tea Chestnuts🌰",
+  "Christmas Limited🎄",
+  "Valentine's Day co-branding💄",
+];
 
 export const data = {
   labels,
@@ -45,8 +52,8 @@ export const data = {
     //   backgroundColor: "rgba(255, 99, 132, 0.5)",
     // },
     {
-      label: "Dataset 2",
-      data: [1, 2, 3, 4, 5, 6, 7, 9],
+      label: "Cakes",
+      data: [150, 30, 90, 25, 30, 18],
       backgroundColor: "rgba(53, 162, 235, 0.5)",
     },
   ],
@@ -55,7 +62,14 @@ export const data = {
 export default function Demo() {
   return (
     // <ChartWrapper title="Order">
-    <div className="relative h-[50vh] w-full">
+    <div
+      style={{
+        margin: "2rem",
+        padding: "2rem",
+        backgroundColor: "white",
+        borderRadius: "1rem",
+      }}
+    >
       <Bar options={options} data={data} />
     </div>
     // </ChartWrapper>

@@ -89,7 +89,7 @@ export const data = {
   ],
 };
 
-export function MutiChart() {
+function MutiChart() {
   return (
     <div
       style={{
@@ -103,3 +103,5 @@ export function MutiChart() {
     </div>
   );
 }
+
+export default MutiChart;

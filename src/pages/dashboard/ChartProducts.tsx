@@ -82,7 +82,7 @@ export const data = {
   ],
 };
 
-export function ChartProducts() {
+function ChartProducts() {
   return (
     <div
       style={{
@@ -96,3 +96,4 @@ export function ChartProducts() {
     </div>
   );
 }
+export default ChartProducts;

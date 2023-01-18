@@ -17,7 +17,7 @@ export const data = {
   ],
 };
 
-export function PieChart() {
+function PieChart() {
   return (
     <div
       style={{
@@ -31,3 +31,5 @@ export function PieChart() {
     </div>
   );
 }
+
+export default PieChart;

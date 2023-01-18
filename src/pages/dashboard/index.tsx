@@ -4,9 +4,9 @@ import Demo from "./Chart";
 import { Col, Row } from "antd";
 import type { GetSessionParams } from "next-auth/react";
 import { getSession } from "next-auth/react";
-import { MutiChart } from "./MutiChart";
-import { ChartProducts } from "./ChartProducts";
-import { PieChart } from "./Donut";
+import MutiChart from "./MutiChart";
+import ChartProducts from "./ChartProducts";
+import PieChart from "./Donut";
 
 export async function getServerSideProps(context: GetSessionParams) {
   // Check if user is authenticated
